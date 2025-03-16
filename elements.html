@@ -22,9 +22,8 @@
       }
 
       .experience-photo {
-        max-width: 350px;  /* Increased image width */
-        max-height: 300px; /* Increased image height */
-        border-radius: 8px;
+        max-width: 400px;  /* Increased image width for better scaling */
+        border-radius: 1px;
         overflow: hidden;
         margin-left: 20px;
         text-align: center; /* Ensures caption aligns with the image */
@@ -34,7 +33,7 @@
         width: 100%; /* Ensures full width */
         height: auto; /* Maintains aspect ratio */
         object-fit: cover;
-        border-radius: 8px;
+        border-radius: 1px;
       }
       
       .experience-photo figcaption {
@@ -45,9 +44,13 @@
         display: block;
         width: 100%; /* Ensures the caption width matches the image */
         word-wrap: break-word;
-        white-space: pre-line; /* Forces text to break onto a new line */
+        white-space: normal; /* Allows full text wrapping */
+        line-height: 1.4; /* Increases line height for readability */
         padding: 5px;
+        overflow-wrap: break-word; /* Ensures long words break properly */
+        max-width: 100%; /* Ensures caption does not exceed image width */
       }
+
 
       @media (max-width: 768px) {
         .experience-block {
