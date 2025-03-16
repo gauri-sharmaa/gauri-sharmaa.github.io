@@ -21,28 +21,32 @@
         max-width: 70%;
       }
 
-      .experience-photo {
-        max-width: 200px;
-        max-height: 200px;
+            .experience-photo {
+        max-width: 300px;  /* Increase image width */
+        max-height: 250px; /* Increase image height */
         border-radius: 8px;
         overflow: hidden;
-      margin-left: 20px;
-      text-align: center; /* Center aligns the caption */
-    }
-
-    .experience-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .experience-photo figcaption {
-      font-size: 0.9em;
-      color: #666; /* Subtle gray color */
-      margin-top: 5px;
-      text-align: center;
-    }
+        margin-left: 20px;
+        text-align: center; /* Center aligns the caption */
+      }
+      
+      .experience-photo img {
+        width: 100%; /* Ensure the image takes full width */
+        height: auto; /* Maintain aspect ratio */
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      
+      .experience-photo figcaption {
+        font-size: 0.9em;
+        color: #666;
+        margin-top: 5px;
+        text-align: center;
+        display: block;
+        width: 100%; /* Ensures caption width matches image */
+        white-space: normal; /* Ensures full text wraps properly */
+        word-wrap: break-word;
+      }
 
       @media (max-width: 768px) {
         .experience-block {
