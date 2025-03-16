@@ -49,6 +49,29 @@
           padding: 5px;
           font-family: inherit; /* Ensures it uses the same font as body text */
         }
+      .skill-tags {
+        margin-top: 12px; /* Matches text spacing */
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px; /* Space between skill buttons */
+      }
+      
+      .skill {
+        background-color: black; /* Black background */
+        color: white; /* White text */
+        padding: 6px 14px;
+        border-radius: 20px; /* Rounded edges */
+        font-size: 1em; /* Matches description text size */
+        font-weight: normal;
+        font-family: inherit; /* Matches main text font */
+        transition: all 0.3s ease-in-out;
+        cursor: default; /* Not clickable unless needed */
+      }
+      
+      .skill:hover {
+        background-color: #333; /* Slightly lighter black on hover */
+      }
+
 
 
       @media (max-width: 768px) {
@@ -101,10 +124,10 @@
               </blockquote>
               <!-- Skill Tags Section -->
               <div class="skill-tags">
-                <button class="skill-button">Machine Learning</button>
-                <button class="skill-button">Time Series Analysis</button>
-                <button class="skill-button">Data Annotation</button>
-                <button class="skill-button">Python</button>
+                <span class="skill">Machine Learning</span>
+                <span class="skill">Time Series Analysis</span>
+                <span class="skill">Data Annotation</span>
+                <span class="skill">Python</span>
               </div>
             </div>
             <figure class="experience-photo">
