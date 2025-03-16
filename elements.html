@@ -22,19 +22,19 @@
       }
 
       .experience-photo {
-        max-width: 300px;  /* Increase image width */
-        max-height: 250px; /* Increase image height */
-        border-radius: 1px;
+        max-width: 350px;  /* Increased image width */
+        max-height: 300px; /* Increased image height */
+        border-radius: 8px;
         overflow: hidden;
         margin-left: 20px;
-        text-align: center; /* Center aligns the caption */
+        text-align: center; /* Ensures caption aligns with the image */
       }
       
       .experience-photo img {
-        width: 100%; /* Ensure the image takes full width */
-        height: auto; /* Maintain aspect ratio */
+        width: 100%; /* Ensures full width */
+        height: auto; /* Maintains aspect ratio */
         object-fit: cover;
-        border-radius: 1px;
+        border-radius: 8px;
       }
       
       .experience-photo figcaption {
@@ -43,9 +43,10 @@
         margin-top: 5px;
         text-align: center;
         display: block;
-        width: 100%; /* Ensures caption width matches image */
-        white-space: normal; /* Ensures full text wraps properly */
+        width: 100%; /* Ensures the caption width matches the image */
         word-wrap: break-word;
+        white-space: pre-line; /* Forces text to break onto a new line */
+        padding: 5px;
       }
 
       @media (max-width: 768px) {
@@ -101,7 +102,7 @@
               <a href="https://vip.gatech.edu/teams/vxv">
                 <img src="images/trading_floor.jpg" alt="Experience Image">
               </a>
-            <figcaption>___This is the trading floor of Georgia Tech's Scheller College of Business. Click on the photo to learn more about my lab.</figcaption>
+            <figcaption>This is the trading floor of Georgia Tech's Scheller College of Business. Click on the photo to learn more about my lab.</figcaption>
             </figure>
             
           </div>
