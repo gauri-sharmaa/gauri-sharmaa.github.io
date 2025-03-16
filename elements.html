@@ -26,15 +26,23 @@
         max-height: 200px;
         border-radius: 8px;
         overflow: hidden;
-        margin-left: 20px;
-      }
+      margin-left: 20px;
+      text-align: center; /* Center aligns the caption */
+    }
 
-      .experience-photo img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 8px;
-      }
+    .experience-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .experience-photo figcaption {
+      font-size: 0.9em;
+      color: #666; /* Subtle gray color */
+      margin-top: 5px;
+      text-align: center;
+    }
 
       @media (max-width: 768px) {
         .experience-block {
@@ -69,7 +77,7 @@
             <h2>My Experiences</h2>
           </header>
           <p>
-            Here, you'll find an overview of my journey through various roles and responsibilities that have shaped my skills and aspirations. From mentorship opportunities to leadership positions, each experience has contributed to my growth in finance, education, and organizational management.
+            My experiences have been a mix of structured roles and unexpected opportunities, each shaping how I approach problem-solving and collaboration. Whether it's leading an Academic Games team, running ToteWorthy, or developing scalable systems for real-world applications, I enjoy taking on challenges that push me to learn and adapt. I'm especially interested in building efficient, scalable systems—whether that’s designing an LMS to support hundreds of learners or fine-tuning machine learning models for meaningful insights. Always open to new experiences, so feel free to reach out!
           </p>
         </article>
 
@@ -85,10 +93,12 @@
                 I conducted in-depth literature reviews and performed exploratory analysis on 8 time series datasets that integrated stock data and sentiment. I also designed and validated an annotation guide for web-scraped news articles from Nasdaq, achieving 85% cross-tested accuracy.
               </blockquote>
             </div>
-            <div class="experience-photo">
-              <a href="#">
-                <img src="assets/images/pic01.jpg" alt="Experience Image">
+            <figure class="experience-photo">
+              <a href="https://vip.gatech.edu/teams/vxv">
+                <img src="assets/images/trading_floor.jpg" alt="Experience Image">
               </a>
+            <figcaption>Researching stock market trends with ML models</figcaption>
+            </figure>
             </div>
           </div>
 
@@ -176,7 +186,7 @@
                 <p>Aug 2024 - Present</p>
               </header>
               <blockquote>
-                 Participated in a semester-long mentorship with the GTSF Investments Committee. This opportunity allows me to immerse myself in the world of finance and accounting while developing my skills in value investing and stock presentations.
+                 Participated in a semester-long mentorship with the GTSF Investments Committee. This opportunity allowed me to immerse myself in the world of finance and accounting while developing my skills in value investing and stock presentations.
               </blockquote>
             </div>
             <div class="experience-photo">
@@ -252,7 +262,7 @@
                 <p>Sep 2021 - May 2024</p>
               </header>
               <blockquote>
-                Tutored over ten students in mathematics and computer science, dedicating 50+ hours to one-on-one sessions.
+                I tutored over ten students in mathematics and computer science, dedicating 50+ hours to one-on-one sessions.
               </blockquote>
             </div>
             <div class="experience-photo">
