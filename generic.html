@@ -16,6 +16,7 @@
         /* Styles for skill tags */
         .skill-tags {
         margin-top: 10px; /* Matches text spacing */
+	margin-bottom: 15px; /* Added space below skills */
         display: flex;
         flex-wrap: wrap;
         gap: 6px; /* Slightly reduced space between tags */
@@ -44,20 +45,17 @@
             margin-top: 10px;
         }
 
-        .actions.special li {
-            list-style: none;
-        }
+        /* Make icons black inside post */
+	.article .actions.special a {
+	    font-size: 20px;
+	    color: black !important; /* Forces black color inside post */
+	    transition: color 0.3s ease-in-out;
+	}
 
-        .actions.special a {
-            font-size: 20px;
-            color: black; /* Adjust color as needed */
-            transition: color 0.3s ease-in-out;
-        }
-
-        .actions.special a:hover {
-            color: #0073e6; /* Change color on hover */
-        }
-    </style>
+	.article .actions.special a:hover {
+	    color: #0073e6; /* Change color on hover */
+	}
+	    </style>
 </head>
   <body class="is-preload">
     <!-- Wrapper -->
@@ -134,6 +132,8 @@
         <ul class="actions special">
             <li><a href="https://itsevelync.github.io/AMD-GC/" target="_blank" class="icon fas fa-link"></a></li>
         </ul>
+
+	
     </article>
 
     <article>
