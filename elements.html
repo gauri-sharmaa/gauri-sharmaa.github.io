@@ -75,22 +75,22 @@
       }
 
       .learn-more-button {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: bold;
-    color: white;
-    background-color: #0073e6;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none; /* Removes underline */
-    text-align: center;
+        all: unset; /* Resets all inherited styles */
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 16px;
+        font-size: inherit;
+        font-weight: inherit;
+        color: inherit;
+        background-color: inherit;
+        border: none;
+        border-radius: inherit;
+        cursor: pointer;
+        text-align: center;
     }
     
     .learn-more-button:hover {
-        background-color: #005bb5;
+        background-color: rgba(0, 0, 0, 0.1); /* Light hover effect */
     }
 
 
@@ -174,7 +174,7 @@
     </div>
     <figure class="experience-photo">
         <img src="images/trading_floor.jpg" alt="Experience Image">
-        <figcaption>This is the trading floor of Georgia Tech's Scheller College of Business.</figcaption>
+        <figcaption>This is the trading floor of Georgia Tech's Scheller College of Business. Click on the button to learn more about my lab.</figcaption>
         <a href="https://vip.gatech.edu/teams/vxv" target="_blank">
             <button class="learn-more-button">Learn More</button>
         </a>
