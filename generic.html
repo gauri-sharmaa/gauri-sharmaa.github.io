@@ -47,9 +47,17 @@
 
         /* Make icons black inside post */
 	.article .actions.special a {
-	    font-size: 20px;
-	    color: black !important; /* Forces black color inside post */
-	    transition: color 0.3s ease-in-out;
+	    font-size: 20px; /* Ensures visibility */
+    color: white !important; /* Makes icon white */
+    background-color: black; /* Black circular background */
+    display: inline-flex; /* Proper alignment */
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Set width for a perfect circle */
+    height: 40px; /* Set height for a perfect circle */
+    border-radius: 50%; /* Makes it circular */
+    text-decoration: none; /* Removes underline */
+    transition: background-color 0.3s ease-in-out;
 	}
 
 	.article .actions.special a:hover {
