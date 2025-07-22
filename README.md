@@ -1,4 +1,4 @@
-# Gauri Sharma's Personal Portfolio
+# Personal Portfolio
 
 [Live Site](https://gauri-sharmaa.github.io/)
 
