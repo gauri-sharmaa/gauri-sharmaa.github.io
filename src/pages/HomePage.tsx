@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; 
 import { Button } from "@/components/ui/button";
 import GraphPattern from "@/components/GraphPattern";
 import { ArrowRight, Github, Linkedin, BookOpen } from "lucide-react";
@@ -181,7 +181,7 @@ const HomePage = () => {
             <div className="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto">
               <TechStackItem name="Git" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" />
               <TechStackItem name="GitHub" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" />
-              <TechStackItem name="Visual Studio Code" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" />
+              <TechStackItem name="VS Code" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" />
               <TechStackItem name="Django" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" />
               <TechStackItem name="IntelliJ IDEA" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/intellij/intellij-original.svg" />
               <TechStackItem name="PyCharm" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pycharm/pycharm-original.svg" />
@@ -250,7 +250,7 @@ const HomePage = () => {
           <div className="flex justify-center mt-12">
             <Button asChild variant="outline">
               <Link to="/blog">View All Articles</Link>
-            </Button>
+            </Button> 
           </div>
         </div>
       </section>
