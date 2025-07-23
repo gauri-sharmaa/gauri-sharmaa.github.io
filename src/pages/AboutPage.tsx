@@ -1,6 +1,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Download, ExternalLink } from "lucide-react";
+import profileImg from '../assets/profile.png';
+import resumePdf from '../assets/gauri_resume.pdf';
 
 const AboutPage = () => {
   return (
@@ -13,14 +15,14 @@ const AboutPage = () => {
             <div className="sticky top-24">
               <div className="rounded-lg overflow-hidden mb-4">
                 <img 
-                  src="/src/assets/profile.png" 
+                  src={profileImg} 
                   alt="Gauri Sharma" 
                   className="w-full aspect-square object-cover bg-background"
                 />
               </div>
               
               <div className="flex flex-col gap-3">
-                <a href="/src/assets/gauri_resume.pdf" target="_blank" rel="noopener noreferrer">
+                <a href={resumePdf} target="_blank" rel="noopener noreferrer">
                   <Button className="w-full">
                     <Download className="mr-2 h-4 w-4" /> Download CV
                   </Button>

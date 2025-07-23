@@ -5,6 +5,8 @@ import GraphPattern from "@/components/GraphPattern";
 import { ArrowRight, Github, Linkedin, BookOpen } from "lucide-react";
 import { blogPosts } from "@/data/blogPosts";
 import { useState, useEffect } from "react";
+import profileImg from '../assets/profile.png';
+import resumePdf from '../assets/gauri_resume.pdf';
 
 const TypewriterText = ({ text, delay = 100 }: { text: string; delay?: number }) => {
   const [currentText, setCurrentText] = useState("");
@@ -52,7 +54,7 @@ const HomePage = () => {
             <div className="relative mb-8 pointer-events-auto">
               <div className="w-48 h-48 rounded-full overflow-hidden shadow-lg">
                 <img 
-                  src="/src/assets/profile.png" 
+                  src={profileImg} 
                   alt="Gauri Sharma" 
                   className="w-full h-full object-cover bg-background"
                 />
@@ -103,7 +105,7 @@ const HomePage = () => {
                 </a>
               </Button>
               <Button asChild variant="outline" size="icon" aria-label="Resume">
-                <a href="/src/assets/gauri_resume.pdf" target="_blank" rel="noopener noreferrer">
+                <a href={resumePdf} target="_blank" rel="noopener noreferrer">
                   <BookOpen size={32} />
                 </a>
               </Button>

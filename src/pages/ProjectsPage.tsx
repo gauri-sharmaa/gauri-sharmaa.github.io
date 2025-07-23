@@ -3,6 +3,13 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import masImg from '../assets/mas.png';
+import aegentImg from '../assets/aegent.png';
+import simpliImg from '../assets/simpli.png';
+import amdImg from '../assets/amd.jpg';
+import podcastImg from '../assets/podcast.jpg';
+import visualeaseImg from '../assets/visualease.jpg';
+import engardeImg from '../assets/engarde.jpg';
 
 const ProjectsPage = () => {
   const location = useLocation();
@@ -54,7 +61,7 @@ const ProjectsPage = () => {
             links={[
               { label: "Website", url: "https://aegentdev.com/" }
             ]}
-            image="/src/assets/mas.png"
+            image={masImg}
           />
 
         <ProjectCard 
@@ -68,7 +75,7 @@ const ProjectsPage = () => {
             links={[
               { label: "Website", url: "https://aegentdev.com/" }
             ]}
-            image="/src/assets/aegent.png"
+            image={aegentImg}
           />
 
           <ProjectCard 
@@ -82,7 +89,7 @@ const ProjectsPage = () => {
             links={[
               { label: "Club Website", url: "https://gtbigdatabigimpact.com/" }
             ]}
-            image="/src/assets/simpli.png"
+            image={simpliImg}
           />
 
 
@@ -99,7 +106,7 @@ const ProjectsPage = () => {
             links={[
               { label: "Website", url: "https://itsevelync.github.io/AMD-GC/" }
             ]}
-            image="/src/assets/amd.jpg"
+            image={amdImg}
           />
           
           <ProjectCard 
@@ -113,7 +120,7 @@ const ProjectsPage = () => {
             links={[
               { label: "Paper", url: "https://drive.google.com/file/d/1oWdZqiYPbXr52UoqpPgSr0a-AYpqzhrt/view" }
             ]}
-            image="/src/assets/podcast.jpg"
+            image={podcastImg}
           />
           
           <ProjectCard 
@@ -127,7 +134,7 @@ const ProjectsPage = () => {
             links={[
               { label: "DevPost Submission", url: "https://devpost.com/software/visualease" }
             ]}
-            image="/src/assets/visualease.jpg"
+            image={visualeaseImg}
           />
 
           <ProjectCard 
@@ -141,7 +148,7 @@ const ProjectsPage = () => {
             links={[
               { label: "DevPost Submission", url: "https://devpost.com/software/en-guarde" }
             ]}
-            image="/src/assets/engarde.jpg"
+            image={engardeImg}
           />
           
           
