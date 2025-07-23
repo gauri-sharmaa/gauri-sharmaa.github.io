@@ -25,24 +25,24 @@ const ContactPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
-      const response = await fetch('http://localhost:3001/api/contact', {
+      const response = await fetch('https://formspree.io/f/xblkgoaz', {
         method: 'POST',
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-      
+
       const result = await response.json();
-      
-      if (result.success) {
+
+      if (response.ok) {
         toast({
           title: "Message sent!",
           description: "Thank you for your message. I'll get back to you soon.",
         });
-        
         setFormData({
           name: "",
           email: "",
@@ -52,7 +52,7 @@ const ContactPage = () => {
       } else {
         toast({
           title: "Error",
-          description: result.message || "Failed to send message. Please try again.",
+          description: result?.errors?.[0]?.message || "Failed to send message. Please try again.",
           variant: "destructive",
         });
       }
