@@ -7,6 +7,7 @@ import { blogPosts } from "@/data/blogPosts";
 import { useState, useEffect } from "react";
 import profileImg from '../assets/profile.png';
 import resumePdf from '../assets/gauri_resume.pdf';
+import cLogo from '../assets/c-1.svg';
 
 const TypewriterText = ({ text, delay = 100 }: { text: string; delay?: number }) => {
   const [currentText, setCurrentText] = useState("");
@@ -171,7 +172,7 @@ const HomePage = () => {
             <div className="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto">
               <TechStackItem name="Python" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" />
               <TechStackItem name="Java" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" />
-              <TechStackItem name="C" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-plain.svg" />
+              <TechStackItem name="C" imageUrl={cLogo} />
               <TechStackItem name="C++" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" />
               <TechStackItem name="Go" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original-wordmark.svg" />
               <TechStackItem name="Node.js" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" />
@@ -197,7 +198,6 @@ const HomePage = () => {
               <TechStackItem name="CSS" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" />
               <TechStackItem name="JavaScript" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" />
               <TechStackItem name="Chart.js" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/chartjs/chartjs-original.svg" />
-              <TechStackItem name="GitHub Pages" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" />
               <TechStackItem name="Vercel" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg" />
               <TechStackItem name="Netlify" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/netlify/netlify-original.svg" />
             
@@ -307,13 +307,22 @@ const TechStackItem = ({
   name: string;
   imageUrl: string;
 }) => {
+  // List of icons to invert in dark mode
+  const invertInDark = [
+    'GitHub',
+    'Vercel',
+    'Pandas',
+    'Terminal',
+    'Markdown'
+  ];
+  const shouldInvert = invertInDark.includes(name);
   return (
     <div className="group relative">
       <div className="w-14 h-14 bg-card rounded-md shadow-sm flex items-center justify-center p-2 border border-border group-hover:bg-black dark:group-hover:bg-white group-hover:border-black dark:group-hover:border-white transition-colors">
         <img 
           src={imageUrl} 
           alt={`${name} logo`} 
-          className="max-w-full max-h-full object-contain group-hover:opacity-0 transition-opacity"
+          className={`max-w-full max-h-full object-contain group-hover:opacity-0 transition-opacity${shouldInvert ? ' dark:invert' : ''}`}
         />
         <span className="absolute inset-0 flex items-center justify-center text-[7px] font-light opacity-0 group-hover:opacity-100 transition-opacity text-white dark:text-black">
           {name}
