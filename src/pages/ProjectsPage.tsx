@@ -59,7 +59,7 @@ const ProjectsPage = () => {
             longDescription="Towards Quantitative Benchmarking for Multi-Agent System Security is an ongoing research paper that proposes a formal framework for evaluating the security of agentic AI systems. The work introduces metrics for agent impact chains, cascading failure scenarios, and protocol-level blast radius estimation, drawing from real-world agent coordination and adversarial prompting techniques. By defining measurable threat surfaces in multi-agent ecosystems, the paper aims to support reproducible, rigorous benchmarking standards for evaluating AI system robustness at scale."
             tags={["Agentic AI", "LLM Safety", "Benchmarking", "Attack Vectors"]}
             links={[
-              { label: "Website", url: "https://aegentdev.com/" }
+              { label: "POV Paper", url: "https://arxiv.org/abs/2507.21146" }
             ]}
             image={masImg}
           />
