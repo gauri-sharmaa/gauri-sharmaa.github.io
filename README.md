@@ -27,7 +27,7 @@ This is my personal portfolio website, built to showcase my projects, experience
 
 ---
 
-## 🏗️ Local Development
+## Local Development
 
 1. **Install dependencies:**
    ```sh
@@ -44,7 +44,7 @@ This is my personal portfolio website, built to showcase my projects, experience
 
 ---
 
-## 🌐 Deployment (GitHub Pages)
+## Deployment (GitHub Pages)
 
 1. **Add deploy scripts to `package.json` if not present:**
    ```json
@@ -64,7 +64,7 @@ The site will be published to the `gh-pages` branch and available at [https://ga
 
 ---
 
-## 📁 Folder Structure
+## Folder Structure
 - `src/pages/` — Main pages (Home, About, Projects, Blog, Contact)
 - `src/components/` — Reusable UI components
 - `src/assets/` — Images and static assets
@@ -72,7 +72,7 @@ The site will be published to the `gh-pages` branch and available at [https://ga
 
 ---
 
-## 📬 Contact
+## Contact
 - [LinkedIn](https://www.linkedin.com/in/gs-softwaredev/)
 - [GitHub](https://github.com/gauri-sharmaa)
 - [Medium](https://medium.com/@gaurisharma1686)
