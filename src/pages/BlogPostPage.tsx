@@ -189,7 +189,7 @@ const markdownToHtml = (markdown: string): string => {
         inList = false;
       }
       // Handle inline formatting
-      let formattedLine = line
+      const formattedLine = line
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/g, '<em>$1</em>')
         .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');

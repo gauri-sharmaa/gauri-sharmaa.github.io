@@ -4,47 +4,14 @@ import { Button } from "@/components/ui/button";
 import GraphPattern from "@/components/GraphPattern";
 import { ArrowRight, Github, Linkedin, BookOpen } from "lucide-react";
 import { blogPosts } from "@/data/blogPosts";
-import { useState, useEffect } from "react";
+import { projects } from "@/data/projects";
 import profileImg from '../assets/profile.png';
 import resumePdf from '../assets/gauri_resume.pdf';
-import cLogo from '../assets/c-1.svg';
-
-const TypewriterText = ({ text, delay = 100 }: { text: string; delay?: number }) => {
-  const [currentText, setCurrentText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(true);
-
-  useEffect(() => {
-    if (isTyping && currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setCurrentText(prev => prev + text[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
-      }, delay);
-
-      return () => clearTimeout(timeout);
-    } else if (currentIndex >= text.length) {
-      // Wait a bit before starting over
-      const restartTimeout = setTimeout(() => {
-        setCurrentText("");
-        setCurrentIndex(0);
-        setIsTyping(true);
-      }, 2000); // Wait 2 seconds before restarting
-
-      return () => clearTimeout(restartTimeout);
-    }
-  }, [currentIndex, delay, text, isTyping]);
-
-  return (
-    <span className="inline-block">
-      {currentText}
-      <span className="animate-pulse">|</span>
-    </span>
-  );
-};
 
 const HomePage = () => {
   // Get the 3 most recent blog posts
   const recentPosts = blogPosts.slice(0, 3);
+  const featured = projects.filter(p => p.featured);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -67,14 +34,12 @@ const HomePage = () => {
             </h1>
             
             <h2 className="text-xl md:text-2xl text-muted-foreground mb-6">
-              Computer Science @ Georgia Tech | Software Developer |
-              AI Research 
+              B.S./M.S. Computer Science @ Georgia Tech
             </h2>
             
             <p className="text-lg text-muted-foreground max-w-2xl mb-8">
-              I study multi-agent communication, AI safety, and AI in finance.
-              <br />
-              <TypewriterText text="Nice to meet you!" delay={150} />
+              I build backend and low-latency systems, and research cost-aware LLM routing.
+              Previously SDE intern at AWS and SWE intern at IBM Research.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pointer-events-auto mb-6">
@@ -125,28 +90,22 @@ const HomePage = () => {
           <div className="flex flex-col items-center text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Featured Projects</h2>
             <p className="text-muted-foreground max-w-2xl">
-              A selection of my recent work from projects and research!
+              Recent systems and research work.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <ProjectCard 
-              title="Towards Quantitative Benchmarking of MAS"
-              role="Lead Researcher"
-              period="2025 - Present"
-              description="This research paper introduces a formal framework for evaluating the security of multi-agent systems, focusing on real-world attack vectors and protocol vulnerabilities. We propose a new benchmarking methodology for agentic AI, develop tools for simulating adversarial scenarios, and collaborate with leading researchers to set new standards for MAS security. Our work aims to make agent-based AI safer, more robust, and easier to audit at scale."
-              tags={["Python", "PyTorch", "Multi-Agent RL"]}
-              link="/projects"
-            />
-            
-            <ProjectCard 
-              title="SimpliEarn Project"
-              role="Sentiment Analysis Team Lead"
-              period="2024 - Present"
-              description="SimpliEarn is an AI-powered platform that transforms earnings calls into actionable insights for investors and analysts. I led the development of a multimodal sentiment analysis pipeline, integrating text and audio analysis, explainable stock charting, and a RAG chatbot for financial Q&A. The platform leverages state-of-the-art NLP and deep learning to deliver fast, data-driven decision support for the finance industry."
-              tags={["TensorFlow", "Human Studies", "Statistical Analysis"]}
-              link="/projects#aegentdev"
-            />
+            {featured.map(project => (
+              <ProjectCard
+                key={project.id}
+                title={project.title}
+                role={project.role}
+                period={project.period}
+                description={project.summary}
+                tags={project.tags}
+                link={`/projects#${project.id}`}
+              />
+            ))}
           </div>
           
           <div className="flex justify-center mt-12">
@@ -157,82 +116,13 @@ const HomePage = () => {
         </div>
       </section>
       
-      {/* Tech Stack Section */}
-      <section className="py-12 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center text-center mb-6">
-            <h2 className="text-3xl font-bold mb-2 text-foreground">Tech Stack</h2>
-            <p className="text-muted-foreground max-w-2xl mb-8">
-              Frameworks I've used in research and development projects!
-            </p>
-          </div>
-          
-          <div className="mb-8">
-          <h3 className="text-xl font-medium mb-4 text-center text-foreground">Development</h3>
-            <div className="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto">
-              <TechStackItem name="Python" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" />
-              <TechStackItem name="Java" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" />
-              <TechStackItem name="C" imageUrl={cLogo} />
-              <TechStackItem name="C++" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" />
-              <TechStackItem name="Go" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original-wordmark.svg" />
-              <TechStackItem name="Node.js" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" />
-
-            </div>
-          </div>
-
-          <div className="mb-8">
-            <div className="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto">
-              <TechStackItem name="Git" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" />
-              <TechStackItem name="GitHub" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" />
-              <TechStackItem name="VS Code" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" />
-              <TechStackItem name="Django" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" />
-              <TechStackItem name="IntelliJ IDEA" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/intellij/intellij-original.svg" />
-              <TechStackItem name="PyCharm" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pycharm/pycharm-original.svg" />
-              <TechStackItem name="Jupyter" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original.svg" />
-              <TechStackItem name="Kubernetes" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg" />
-            </div>
-          </div>
-          <div className="mb-8">
-            <div className="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto">
-              <TechStackItem name="HTML5" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" />
-              <TechStackItem name="CSS" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" />
-              <TechStackItem name="JavaScript" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" />
-              <TechStackItem name="Chart.js" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/chartjs/chartjs-original.svg" />
-              <TechStackItem name="Vercel" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg" />
-              <TechStackItem name="Netlify" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/netlify/netlify-original.svg" />
-            
-            </div>
-          </div>
-
-
-          <div className="mb-8">
-            <h3 className="text-xl font-medium mb-4 text-center text-foreground">Research</h3>
-            <div className="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto">
-              <TechStackItem name="Keras" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/keras/keras-original.svg" />
-              <TechStackItem name="Matplotlib" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matplotlib/matplotlib-original.svg" />
-              <TechStackItem name="NumPy" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg" />
-              <TechStackItem name="Pandas" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" />
-              <TechStackItem name="PyTorch" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" />
-              <TechStackItem name="scikit-learn" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg" />
-              <TechStackItem name="TensorFlow" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" />
-              <TechStackItem name="Google Colab" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecolab/googlecolab-original.svg" />
-              <TechStackItem name="Terminal" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" />
-              <TechStackItem name="Markdown" imageUrl="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/markdown/markdown-original.svg" />
-           
-            </div>
-          </div>
-
-          
-        </div>
-      </section>
-      
       {/* Recent Blog Posts Section */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Recent Articles</h2>
+            <h2 className="text-3xl font-bold mb-4">Writing</h2>
             <p className="text-muted-foreground max-w-2xl">
-              Thoughts and insights on AI research, computer science, and academic life.
+              Notes on agent security, research, and infrastructure.
             </p>
           </div>
           
@@ -282,7 +172,7 @@ const ProjectCard = ({
         <p className="text-sm text-muted-foreground">{role}</p>
         <p className="text-sm text-muted-foreground">{period}</p>
       </div>
-      <p className="mb-4">{description}</p>
+      <p className="mb-4 text-muted-foreground">{description}</p>
       <div className="flex flex-wrap gap-2 mb-4">
         {tags.map((tag, index) => (
           <span 
@@ -296,38 +186,6 @@ const ProjectCard = ({
       <Button asChild variant="link" className="p-0">
         <Link to={link}>Learn More</Link>
       </Button>
-    </div>
-  );
-};
-
-const TechStackItem = ({
-  name,
-  imageUrl
-}: {
-  name: string;
-  imageUrl: string;
-}) => {
-  // List of icons to invert in dark mode
-  const invertInDark = [
-    'GitHub',
-    'Vercel',
-    'Pandas',
-    'Terminal',
-    'Markdown'
-  ];
-  const shouldInvert = invertInDark.includes(name);
-  return (
-    <div className="group relative">
-      <div className="w-14 h-14 bg-card rounded-md shadow-sm flex items-center justify-center p-2 border border-border group-hover:bg-black dark:group-hover:bg-white group-hover:border-black dark:group-hover:border-white transition-colors">
-        <img 
-          src={imageUrl} 
-          alt={`${name} logo`} 
-          className={`max-w-full max-h-full object-contain group-hover:opacity-0 transition-opacity${shouldInvert ? ' dark:invert' : ''}`}
-        />
-        <span className="absolute inset-0 flex items-center justify-center text-[7px] font-light opacity-0 group-hover:opacity-100 transition-opacity text-white dark:text-black">
-          {name}
-        </span>
-      </div>
     </div>
   );
 };

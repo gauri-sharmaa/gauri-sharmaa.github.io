@@ -73,7 +73,7 @@ const ContactPage = () => {
       <div className="max-w-5xl mx-auto">
         <h1 className="text-4xl font-bold mb-4">Contact</h1>
         <p className="text-xl text-muted-foreground mb-12">
-          Get in touch for research collaborations, project opportunities, or just to say hello!
+          Happy to talk about systems, research, or internships.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -151,7 +151,7 @@ const ContactPage = () => {
               <ContactItem 
                 icon={<Mail className="h-5 w-5" />}
                 title="Email"
-                content={<a href="mailto:gaurisharma80@gatech.edu" className="text-primary hover:underline">gaurisharma80 [at] gatech [dot] edu</a>}
+                content={<a href="mailto:gsharma80@gatech.edu" className="text-primary hover:underline">gsharma80 [at] gatech [dot] edu</a>}
               />
 
             <ContactItem 
@@ -161,10 +161,10 @@ const ContactPage = () => {
                   <span>
                     <Button asChild size="sm" className="mb-2">
                       <a href="https://calendly.com/gsharma-fusen/30min" target="_blank" rel="noopener noreferrer">
-                        Click here to book a meeting!
+                        Book a 30-minute chat
                       </a>
                     </Button>
-                    <span className="block mt-1">If you book a meeting please also send a message on the contact form! Thank you!</span>
+                    <span className="block mt-1">If you book a time, send a quick note with the form too so I know what it is about.</span>
                   </span>
                 }
               />

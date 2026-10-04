@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Github, Linkedin, Twitter, BookOpen } from "lucide-react";
+import { Github, Linkedin, BookOpen } from "lucide-react";
 import resumePdf from '../assets/gauri_resume.pdf';
 
 const Footer = () => {
