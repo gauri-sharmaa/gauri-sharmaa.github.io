@@ -90,7 +90,7 @@ const HomePage = () => {
           <div className="flex flex-col items-center text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Featured Projects</h2>
             <p className="text-muted-foreground max-w-2xl">
-              Recent systems and research work.
+              What I've been working on lately.
             </p>
           </div>
           
@@ -99,9 +99,8 @@ const HomePage = () => {
               <ProjectCard
                 key={project.id}
                 title={project.title}
-                role={project.role}
-                period={project.period}
-                description={project.summary}
+                when={project.when}
+                description={project.blurb}
                 tags={project.tags}
                 link={`/projects#${project.id}`}
               />
@@ -152,15 +151,13 @@ const HomePage = () => {
 
 const ProjectCard = ({ 
   title, 
-  role, 
-  period, 
+  when, 
   description, 
   tags, 
   link 
 }: { 
   title: string; 
-  role: string; 
-  period: string; 
+  when: string; 
   description: string; 
   tags: string[]; 
   link: string; 
@@ -168,10 +165,7 @@ const ProjectCard = ({
   return (
     <div className="bg-card rounded-lg border border-border p-6 hover:shadow-md transition-shadow">
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <div className="flex flex-col gap-1 mb-4">
-        <p className="text-sm text-muted-foreground">{role}</p>
-        <p className="text-sm text-muted-foreground">{period}</p>
-      </div>
+      <p className="text-sm text-muted-foreground mb-3">{when}</p>
       <p className="mb-4 text-muted-foreground">{description}</p>
       <div className="flex flex-wrap gap-2 mb-4">
         {tags.map((tag, index) => (
