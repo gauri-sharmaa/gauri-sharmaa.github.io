@@ -65,6 +65,9 @@ const Navbar = () => {
           <NavLink to="/blog" active={isActive("/blog")}>
             Blog
           </NavLink>
+          <NavLink to="/map" active={isActive("/map")}>
+            Map
+          </NavLink>
           <NavLink to="/contact" active={isActive("/contact")}>
             Contact
           </NavLink>
@@ -191,6 +194,7 @@ const MobileMenu = () => {
             <MobileNavLink to="/about">About</MobileNavLink>
             <MobileNavLink to="/projects">Projects</MobileNavLink>
             <MobileNavLink to="/blog">Blog</MobileNavLink>
+            <MobileNavLink to="/map">Map</MobileNavLink>
             <MobileNavLink to="/contact">Contact</MobileNavLink>
           </nav>
         </div>
