@@ -134,18 +134,18 @@ const HomePage = () => {
               title="Towards Quantitative Benchmarking of MAS"
               role="Lead Researcher"
               period="2025 - Present"
-              description="This research paper introduces a formal framework for evaluating the security of multi-agent systems, focusing on real-world attack vectors and protocol vulnerabilities. We propose a new benchmarking methodology for agentic AI, develop tools for simulating adversarial scenarios, and collaborate with leading researchers to set new standards for MAS security. Our work aims to make agent-based AI safer, more robust, and easier to audit at scale."
+              description="A framework for measuring how secure multi-agent systems are, built around real attack vectors and protocol weaknesses. It includes tools for simulating adversarial scenarios."
               tags={["Python", "PyTorch", "Multi-Agent RL"]}
-              link="/projects"
+              link="/projects#benchmarking-mas"
             />
             
             <ProjectCard 
               title="SimpliEarn Project"
               role="Sentiment Analysis Team Lead"
               period="2024 - Present"
-              description="SimpliEarn is an AI-powered platform that transforms earnings calls into actionable insights for investors and analysts. I led the development of a multimodal sentiment analysis pipeline, integrating text and audio analysis, explainable stock charting, and a RAG chatbot for financial Q&A. The platform leverages state-of-the-art NLP and deep learning to deliver fast, data-driven decision support for the finance industry."
+              description="A platform that turns earnings calls into quick insights for investors. I led the multimodal sentiment pipeline, combining what executives say with how they say it."
               tags={["TensorFlow", "Human Studies", "Statistical Analysis"]}
-              link="/projects#aegentdev"
+              link="/projects#simpli-earn"
             />
           </div>
           
@@ -282,7 +282,7 @@ const ProjectCard = ({
         <p className="text-sm text-muted-foreground">{role}</p>
         <p className="text-sm text-muted-foreground">{period}</p>
       </div>
-      <p className="mb-4">{description}</p>
+      <p className="mb-4 text-sm text-muted-foreground leading-relaxed">{description}</p>
       <div className="flex flex-wrap gap-2 mb-4">
         {tags.map((tag, index) => (
           <span 
