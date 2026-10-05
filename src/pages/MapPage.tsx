@@ -26,9 +26,12 @@ const MapPage = () => {
             </span>
           ))}
         </div>
-        <div className="h-[70vh] min-h-[480px]">
+        <div className="h-[75vh] md:h-[70vh] min-h-[480px]">
           <InterestMap />
         </div>
+        <p className="mt-3 text-sm text-muted-foreground md:hidden">
+          Tip: tap an interest to see what connects to it, or pinch to zoom in for every label.
+        </p>
       </div>
     </div>
   );

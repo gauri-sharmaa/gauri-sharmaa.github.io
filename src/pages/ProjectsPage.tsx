@@ -10,6 +10,7 @@ import amdImg from '../assets/amd.jpg';
 import podcastImg from '../assets/podcast.jpg';
 import visualeaseImg from '../assets/visualease.jpg';
 import engardeImg from '../assets/engarde.jpg';
+import guardrailsPdf from '../assets/protocol_aware_guardrails.pdf';
 
 const ProjectsPage = () => {
   const location = useLocation();
@@ -49,6 +50,19 @@ const ProjectsPage = () => {
             ]}
             image="/src/assets/simpli.png"
           /> */}
+
+          <ProjectCard 
+            id="protocol-guardrails"
+            title="Position: Protocol-Aware Guardrails Are Necessary for Multi-Agent Systems"
+            period="Fall 2026"
+            role="Co-author, with Vidhi Kulkarni"
+            description="Accepted as a poster at the NeurIPS 2026 Agents in the Wild (AIWILD) workshop"
+            longDescription="Multi-agent systems are becoming the default way tool-using AI ships in products, yet most deployed guardrails are still designed for a single agent and check one message or turn at a time. In multi-agent systems, harm is often protocol-shaped: it emerges from how messages, roles, capabilities, and state changes compose across agents over time. This position paper argues for protocol-aware guardrails that treat the system as a distributed system with explicit interaction semantics. It proposes typed interaction protocols, capability and consent tokens bound to provenance, and runtime monitors that enforce global invariants over execution traces, along with evaluation criteria that reflect real deployment constraints like latency, utility, and composability."
+            tags={["Multi-Agent Systems", "AI Safety", "Guardrails", "NeurIPS Workshop"]}
+            links={[
+              { label: "Paper", url: guardrailsPdf }
+            ]}
+          />
 
           <ProjectCard 
             id="benchmarking-mas"
@@ -182,19 +196,21 @@ const ProjectCard = ({
   longDescription: string; 
   tags: string[]; 
   links: ProjectLink[]; 
-  image: string; 
+  image?: string; 
 }) => {
   return (
     <div id={id} className="bg-card rounded-lg border border-border overflow-hidden scroll-mt-[200px]">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-1 p-6 flex flex-col">
-          <div className="aspect-video bg-muted rounded-md overflow-hidden mb-4">
-            <img 
-              src={image} 
-              alt={title} 
-              className="w-full h-full object-cover"
-            />
-          </div>
+          {image && (
+            <div className="aspect-video bg-muted rounded-md overflow-hidden mb-4">
+              <img 
+                src={image} 
+                alt={title} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )}
           
           <h3 className="text-xl font-semibold mb-2">{title}</h3>
           

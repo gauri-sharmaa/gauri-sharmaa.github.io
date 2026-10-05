@@ -108,7 +108,7 @@ const AboutPage = () => {
                   <h3 className="text-lg font-medium"><span className="text-foreground">Social Dynamics and Wellbeing Lab @ Georgia Tech</span></h3>
                   <div className="text-muted-foreground mb-2">Atlanta, GA</div>
                   <p className="text-muted-foreground mb-3">
-                    As a research assistant, I co-authored a study on jailbroken LLM agents simulating real-world harassment using prompting, memory injection, and fine-tuning. I helped survey and develop jailbroken multi-agent pipelines (<span className="text-foreground">of SOTA models including GPT-4o, Claude 3.5 Sonnet, and Llama 3.1</span>) to evaluate toxic dialogues in 8 harassment types using ASR, TTS, and RR metrics.
+                    As a research assistant, I co-authored a study on jailbroken LLM agents simulating real-world harassment using prompting, memory injection, and fine-tuning. I helped survey and develop jailbroken multi-agent pipelines (<span className="text-foreground">of SOTA models including GPT-4o, Claude 3.5 Sonnet, and Llama 3.1</span>) to evaluate toxic dialogues in 8 harassment types using ASR, TTS, and RR metrics. This work was submitted to <span className="text-foreground">ICWSM</span> as <span className="text-foreground">"Echoes of Human Malice"</span>.
                   </p>
                 </div>
                 

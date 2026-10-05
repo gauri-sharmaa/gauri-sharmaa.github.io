@@ -59,7 +59,7 @@ const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v
 // Builds the simulation nodes, seeding interests on a ring and every other
 // node near the interests it belongs to, so the layout settles quickly.
 const buildSimulation = (portrait: boolean) => {
-  const stretch = portrait ? { x: 0.85, y: 1.5 } : { x: 1.45, y: 1 };
+  const stretch = portrait ? { x: 0.75, y: 1.9 } : { x: 1.45, y: 1 };
   const interestIds = mapNodes.filter((n) => n.kind === "interest").map((n) => n.id);
   const interestAngle = new Map(interestIds.map((id, i) => [id, (i / interestIds.length) * Math.PI * 2]));
 
@@ -251,6 +251,7 @@ const InterestMap = () => {
   const svgRef = useRef<SVGSVGElement>(null);
   const [size, setSize] = useState({ w: 800, h: 600 });
   const portrait = size.h > size.w * 1.1;
+  const compact = size.w < 640;
   const sim = useMemo(() => buildSimulation(portrait), [portrait]);
   const byId = useMemo(() => new Map(sim.nodes.map((n) => [n.id, n])), [sim]);
 
@@ -540,7 +541,9 @@ const InterestMap = () => {
               {sim.nodes.map((n) => {
                 const dimmed = focusSet ? !focusSet.has(n.id) : false;
                 const isSelected = selected === n.id;
-                const showLabel = n.kind !== "me";
+                // On small screens, leaf labels wait until you zoom in or tap nearby.
+                const showLabel =
+                  n.kind !== "me" && (n.kind === "interest" || !compact || view.k >= 0.75 || (focusSet?.has(n.id) ?? false));
                 return (
                   <g
                     key={n.id}
@@ -581,7 +584,7 @@ const InterestMap = () => {
                         opacity={dimmed ? 0.2 : 1}
                         style={{ transition: "opacity 200ms", pointerEvents: "none" }}
                       >
-                        {wrapLabel(n.label, n.kind === "interest" ? 16 : 12).map((line, i) => (
+                        {wrapLabel(n.label, n.kind === "interest" ? (compact ? 12 : 16) : 12).map((line, i) => (
                           <tspan key={i} x={0} dy={i === 0 ? 0 : "1.15em"}>
                             {line}
                           </tspan>
@@ -630,7 +633,7 @@ const InterestMap = () => {
 
       {/* Detail panel */}
       {selectedNode && (
-        <div className="absolute bottom-3 left-3 right-3 md:left-auto md:w-80 max-h-[60%] overflow-y-auto rounded-lg border border-border bg-background/95 backdrop-blur p-4 shadow-lg">
+        <div className="absolute bottom-3 left-3 right-3 md:left-auto md:w-80 max-h-[45%] md:max-h-[60%] overflow-y-auto rounded-lg border border-border bg-background/95 backdrop-blur p-4 shadow-lg">
           <div className="flex items-start justify-between gap-2 mb-2">
             <div>
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">

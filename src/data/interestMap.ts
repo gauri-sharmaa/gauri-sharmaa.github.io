@@ -1,3 +1,5 @@
+import guardrailsPdf from "@/assets/protocol_aware_guardrails.pdf";
+
 // Data for the interactive interest map on /map.
 // To add something: push a node below, then connect it to one or more
 // interests in `mapEdges`. The first interest a node connects to sets its color.
@@ -60,7 +62,7 @@ export const mapNodes: MapNode[] = [
     id: "safety",
     label: "AI Safety & Security",
     kind: "interest",
-    blurb: "Measuring how agentic systems fail: attack vectors, cascading failures, and jailbroken model behavior.",
+    blurb: "Measuring how agentic systems fail and how to guard them: attack vectors, cascading failures, protocol-aware guardrails, and jailbroken model behavior.",
   },
   {
     id: "impact",
@@ -185,6 +187,23 @@ export const mapNodes: MapNode[] = [
 
   // Projects
   {
+    id: "guardrails-paper",
+    label: "Protocol-Aware Guardrails",
+    kind: "project",
+    period: "NeurIPS 2026 · AIWILD",
+    blurb:
+      "Position paper with Vidhi Kulkarni, accepted as a poster at the NeurIPS 2026 Agents in the Wild workshop. Argues that multi-agent safety needs guardrails that reason over interaction protocols and execution traces, not single turns.",
+    link: { label: "Read paper", href: guardrailsPdf, external: true },
+  },
+  {
+    id: "echoes-paper",
+    label: "Echoes of Human Malice",
+    kind: "writing",
+    period: "Submitted to ICWSM",
+    blurb:
+      "Paper from the Social Dynamics & Wellbeing Lab on jailbroken LLM agents reproducing real-world harassment. Submitted to ICWSM.",
+  },
+  {
     id: "mas-paper",
     label: "Benchmarking MAS Security",
     kind: "project",
@@ -298,6 +317,13 @@ export const mapEdges: [string, string][] = [
   ["grand-challenges", "community"],
   ["grand-challenges", "impact"],
 
+  ["guardrails-paper", "safety"],
+  ["guardrails-paper", "agents"],
+  ["guardrails-paper", "writing"],
+  ["guardrails-paper", "mas-paper"],
+  ["echoes-paper", "safety"],
+  ["echoes-paper", "sdwl"],
+  ["echoes-paper", "writing"],
   ["mas-paper", "agents"],
   ["mas-paper", "safety"],
   ["mas-paper", "writing"],
