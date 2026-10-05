@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Maximize2, Minus, Plus, X } from "lucide-react";
+import { ArrowUpRight, Maximize2, Minus, Plus, Shrink, X } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   interestColors,
@@ -58,8 +58,8 @@ const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v
 
 // Builds the simulation nodes, seeding interests on a ring and every other
 // node near the interests it belongs to, so the layout settles quickly.
-const buildSimulation = (portrait: boolean) => {
-  const stretch = portrait ? { x: 0.75, y: 1.9 } : { x: 1.45, y: 1 };
+const buildSimulation = () => {
+  const stretch = { x: 1.45, y: 1 };
   const interestIds = mapNodes.filter((n) => n.kind === "interest").map((n) => n.id);
   const interestAngle = new Map(interestIds.map((id, i) => [id, (i / interestIds.length) * Math.PI * 2]));
 
@@ -254,7 +254,7 @@ const sketchLine = (ax: number, ay: number, bx: number, by: number, seed: string
 };
 
 const PENCIL = "hsl(var(--foreground) / 0.75)";
-export const HAND_FONT = "'Caveat', 'Segoe Print', 'Comic Sans MS', cursive";
+export const HAND_FONT = "'Nanum Pen Script', 'Segoe Print', 'Comic Sans MS', cursive";
 
 const NodeShape = ({ node, dimmed }: { node: SimNode; dimmed: boolean }) => {
   const common = { opacity: dimmed ? 0.2 : 1, style: { transition: "opacity 200ms" } };
@@ -266,7 +266,7 @@ const NodeShape = ({ node, dimmed }: { node: SimNode; dimmed: boolean }) => {
         <g {...common}>
           <path d={sketchCircle(node.r, id, 0.05)} fill="hsl(var(--card))" stroke={PENCIL} strokeWidth={1.4} strokeLinecap="round" />
           <path d={sketchCircle(node.r + 4, id + "2", 0.06)} fill="none" stroke={PENCIL} strokeWidth={0.8} strokeLinecap="round" opacity={0.6} />
-          <text textAnchor="middle" fill="hsl(var(--foreground))" fontFamily={HAND_FONT} fontSize={19} fontWeight={700}>
+          <text textAnchor="middle" fill="hsl(var(--foreground))" fontFamily={HAND_FONT} fontSize={23}>
             <tspan x={0} dy="-0.15em">my</tspan>
             <tspan x={0} dy="1em">experience</tspan>
           </text>
@@ -327,9 +327,8 @@ const InterestMap = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [size, setSize] = useState({ w: 800, h: 600 });
-  const portrait = size.h > size.w * 1.1;
-  const compact = size.w < 640;
-  const sim = useMemo(() => buildSimulation(portrait), [portrait]);
+  const [exploring, setExploring] = useState(false);
+  const sim = useMemo(buildSimulation, []);
   const byId = useMemo(() => new Map(sim.nodes.map((n) => [n.id, n])), [sim]);
 
   const [, setFrame] = useState(0);
@@ -371,8 +370,9 @@ const InterestMap = () => {
     [run],
   );
 
-  // Fits the whole graph in view.
-  const fit = useCallback(() => {
+  // Fits the whole graph in view. On small screens the default view instead
+  // starts at a readable zoom around the center, and you pan to explore.
+  const fit = useCallback((all = false) => {
     const { w, h } = size;
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
     for (const n of sim.nodes) {
@@ -384,9 +384,27 @@ const InterestMap = () => {
     // Leave room for labels, and for the interest chips along the top.
     const pad = 60;
     const top = w < 768 ? 50 : 80;
-    const k = clamp(Math.min(w / (maxX - minX + pad * 2), (h - top) / (maxY - minY + pad * 2)), MIN_ZOOM, 1.4);
-    setView({ k, x: w / 2 - ((minX + maxX) / 2) * k, y: top + (h - top) / 2 - ((minY + maxY) / 2) * k });
+    const fitK = clamp(Math.min(w / (maxX - minX + pad * 2), (h - top) / (maxY - minY + pad * 2)), MIN_ZOOM, 1.4);
+    if (!all && w < 640 && fitK < 0.8) {
+      const k = 0.8;
+      setView({ k, x: w / 2, y: top + (h - top) / 2 });
+      return;
+    }
+    setView({ k: fitK, x: w / 2 - ((minX + maxX) / 2) * fitK, y: top + (h - top) / 2 - ((minY + maxY) / 2) * fitK });
   }, [sim, size]);
+
+  // Full-screen explore mode: lock page scrolling and close on Escape.
+  useEffect(() => {
+    if (!exploring) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setExploring(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [exploring]);
 
   useEffect(() => {
     // Settle most of the layout up front so the first paint isn't a tangle.
@@ -532,7 +550,8 @@ const InterestMap = () => {
     const g = gesture.current;
     if (g?.type === "node") {
       releaseNode();
-      if (!g.moved) setSelected((s) => (s === g.id ? null : g.id));
+      // A cancelled pointer means the page scrolled instead; that isn't a tap.
+      if (!g.moved && e.type === "pointerup") setSelected((s) => (s === g.id ? null : g.id));
       reheat(0.2);
     } else if (g?.type === "pan" && e.type === "pointerup") {
       // A tap on empty space clears the selection.
@@ -561,13 +580,20 @@ const InterestMap = () => {
   const interests = sim.nodes.filter((n) => n.kind === "interest");
   // Labels shrink with the map but stay readable when zoomed out.
   const labelScale = Math.max(1, 0.9 / view.k);
-  const labelSize = (n: SimNode) => (n.kind === "interest" ? 18 : 14) * labelScale;
+  const labelSize = (n: SimNode) => (n.kind === "interest" ? 21 : 16) * labelScale;
   const labelOffset = (n: SimNode) => n.r + (n.kind === "interest" ? 24 : 13) * labelScale;
 
 
 
   return (
-    <div className="relative w-full h-full">
+    <div
+      className={
+        exploring
+          ? "fixed inset-0 z-[60] bg-background p-2 pt-[max(0.5rem,env(safe-area-inset-top))] pb-[max(0.5rem,env(safe-area-inset-bottom))]"
+          : "relative w-full h-full"
+      }
+    >
+      <div className="relative w-full h-full">
       <div ref={containerRef} className="absolute inset-0 overflow-hidden rounded-lg border border-border bg-card"
         style={{
           // Graph paper, like a page from a notebook.
@@ -581,7 +607,7 @@ const InterestMap = () => {
           width={size.w}
           height={size.h}
           className="block select-none cursor-grab active:cursor-grabbing"
-          style={{ touchAction: "none" }}
+          style={{ touchAction: exploring ? "none" : "pan-y" }}
           onPointerDown={(e) => onPointerDown(e)}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
@@ -618,9 +644,7 @@ const InterestMap = () => {
               {sim.nodes.map((n) => {
                 const dimmed = focusSet ? !focusSet.has(n.id) : false;
                 const isSelected = selected === n.id;
-                // On small screens, leaf labels wait until you zoom in or tap nearby.
-                const showLabel =
-                  n.kind !== "me" && (n.kind === "interest" || !compact || view.k >= 0.75 || (focusSet?.has(n.id) ?? false));
+                const showLabel = n.kind !== "me";
                 return (
                   <g
                     key={n.id}
@@ -652,7 +676,6 @@ const InterestMap = () => {
                         textAnchor="middle"
                         fontSize={labelSize(n)}
                         fontFamily={HAND_FONT}
-                        fontWeight={n.kind === "interest" ? 700 : 500}
                         fill={n.kind === "interest" ? "hsl(var(--foreground) / 0.9)" : "hsl(var(--muted-foreground))"}
                         stroke="hsl(var(--card))"
                         strokeWidth={4 * labelScale}
@@ -661,8 +684,8 @@ const InterestMap = () => {
                         opacity={dimmed ? 0.2 : 1}
                         style={{ transition: "opacity 200ms", pointerEvents: "none" }}
                       >
-                        {wrapLabel(n.label, n.kind === "interest" ? (compact ? 12 : 16) : 12).map((line, i) => (
-                          <tspan key={i} x={0} dy={i === 0 ? 0 : "0.95em"}>
+                        {wrapLabel(n.label, n.kind === "interest" ? 16 : 12).map((line, i) => (
+                          <tspan key={i} x={0} dy={i === 0 ? 0 : "0.9em"}>
                             {line}
                           </tspan>
                         ))}
@@ -684,8 +707,18 @@ const InterestMap = () => {
         <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Zoom out" onClick={() => zoomAt(0.8, size.w / 2, size.h / 2)}>
           <Minus className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Fit map to view" onClick={fit}>
-          <Maximize2 className="h-4 w-4" />
+        <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Show the whole map" onClick={() => fit(true)}>
+          <Shrink className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          aria-label={exploring ? "Exit full screen" : "Explore full screen"}
+          aria-pressed={exploring}
+          onClick={() => setExploring((v) => !v)}
+        >
+          {exploring ? <X className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
         </Button>
       </div>
 
@@ -761,6 +794,7 @@ const InterestMap = () => {
             ))}
         </div>
       )}
+      </div>
     </div>
   );
 };

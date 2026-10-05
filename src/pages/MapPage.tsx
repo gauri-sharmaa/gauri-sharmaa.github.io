@@ -27,11 +27,11 @@ const MapPage = () => {
             </span>
           ))}
         </div>
-        <div className="h-[75vh] md:h-[70vh] min-h-[480px]">
+        <div className="h-[65vh] md:h-[70vh] min-h-[440px]">
           <InterestMap />
         </div>
         <p className="mt-3 text-sm text-muted-foreground md:hidden">
-          Tip: tap an interest to see what connects to it, or pinch to zoom in for every label.
+          Swipe sideways or pinch to move around the map, or tap the expand button in the corner to explore it full screen.
         </p>
       </div>
     </div>
