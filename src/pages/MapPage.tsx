@@ -15,9 +15,8 @@ const MapPage = () => {
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold mb-4">How it all connects</h1>
         <p className="text-lg text-muted-foreground mb-4 max-w-3xl">
-          I kept noticing that the things I work on aren't separate. A finance project turns into an NLP
-          problem, a safety paper turns into a systems question. So I sketched it out. Drag things around,
-          zoom in, and click anything to see where it leads.
+          It's hard to keep my projects siloed, and a one-page resume can't capture everything, even with
+          maxed-out margins. So here's a mind map of my experience :)
         </p>
         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
           {KINDS.map(({ kind, label }) => (
