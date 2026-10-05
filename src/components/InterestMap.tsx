@@ -182,6 +182,17 @@ const tick = (nodes: SimNode[], byId: Map<string, SimNode>, alpha: number) => {
   }
 };
 
+// Breaks a label into short lines so it takes less room on the map.
+const wrapLabel = (label: string, maxChars: number) => {
+  const lines: string[] = [];
+  for (const word of label.split(" ")) {
+    const last = lines[lines.length - 1];
+    if (last !== undefined && (last + " " + word).length <= maxChars) lines[lines.length - 1] = last + " " + word;
+    else lines.push(word);
+  }
+  return lines;
+};
+
 // A color with transparency, from an "hsl(h s% l%)" string.
 const tint = (color: string, alpha: number) => color.replace(")", ` / ${alpha})`);
 
@@ -472,28 +483,10 @@ const InterestMap = () => {
   const interests = sim.nodes.filter((n) => n.kind === "interest");
   // Labels shrink with the map but stay readable when zoomed out.
   const labelScale = Math.max(1, 0.9 / view.k);
-  const labelSize = (n: SimNode) => (n.kind === "interest" ? 13 : 11) * labelScale;
-  const labelOffset = (n: SimNode) => n.r + (n.kind === "interest" ? 22 : 14) * labelScale;
+  const labelSize = (n: SimNode) => (n.kind === "interest" ? 12 : 10) * labelScale;
+  const labelOffset = (n: SimNode) => n.r + (n.kind === "interest" ? 20 : 11) * labelScale;
 
-  // Place labels most-important first and skip any that would collide, so the
-  // map stays legible. Hovering or zooming in reveals the rest.
-  const visibleLabels = new Set<string>();
-  {
-    const placed: { x1: number; y1: number; x2: number; y2: number }[] = [];
-    const rank = (n: SimNode) =>
-      (n.id === focusId ? 0 : 4) + (n.kind === "interest" ? 0 : 2) + (focusSet?.has(n.id) ? 0 : 1);
-    const ordered = sim.nodes.filter((n) => n.kind !== "me").sort((a, b) => rank(a) - rank(b));
-    for (const n of ordered) {
-      const size = labelSize(n);
-      const w = n.label.length * size * 0.55 + 4;
-      const cy = n.y + labelOffset(n) - size * 0.35;
-      const box = { x1: n.x - w / 2, x2: n.x + w / 2, y1: cy - size * 0.6, y2: cy + size * 0.6 };
-      const hits = placed.some((p) => box.x1 < p.x2 && box.x2 > p.x1 && box.y1 < p.y2 && box.y2 > p.y1);
-      if (hits && n.kind !== "interest" && n.id !== focusId) continue;
-      placed.push(box);
-      visibleLabels.add(n.id);
-    }
-  }
+
 
   return (
     <div className="relative w-full h-full">
@@ -547,7 +540,7 @@ const InterestMap = () => {
               {sim.nodes.map((n) => {
                 const dimmed = focusSet ? !focusSet.has(n.id) : false;
                 const isSelected = selected === n.id;
-                const showLabel = visibleLabels.has(n.id);
+                const showLabel = n.kind !== "me";
                 return (
                   <g
                     key={n.id}
@@ -579,7 +572,8 @@ const InterestMap = () => {
                         textAnchor="middle"
                         fontSize={labelSize(n)}
                         fontWeight={n.kind === "interest" ? 600 : 400}
-                        fill={n.kind === "interest" ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))"}
+                        letterSpacing={n.kind === "interest" ? undefined : "0.01em"}
+                        fill={n.kind === "interest" ? "hsl(var(--foreground) / 0.85)" : "hsl(var(--muted-foreground) / 0.85)"}
                         stroke="hsl(var(--card))"
                         strokeWidth={4 * labelScale}
                         strokeLinejoin="round"
@@ -587,7 +581,11 @@ const InterestMap = () => {
                         opacity={dimmed ? 0.2 : 1}
                         style={{ transition: "opacity 200ms", pointerEvents: "none" }}
                       >
-                        {n.label}
+                        {wrapLabel(n.label, n.kind === "interest" ? 16 : 12).map((line, i) => (
+                          <tspan key={i} x={0} dy={i === 0 ? 0 : "1.15em"}>
+                            {line}
+                          </tspan>
+                        ))}
                       </text>
                     )}
                   </g>
