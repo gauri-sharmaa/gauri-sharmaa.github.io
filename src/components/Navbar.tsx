@@ -1,15 +1,11 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useTheme } from "./theme-provider";
 import { Button } from "./ui/button";
-import { Moon, Sun } from "lucide-react";
 
 const Navbar = () => {
   const location = useLocation();
-  const { theme, setTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
-  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,25 +16,8 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    // Determine if the current theme is dark
-    const root = window.document.documentElement;
-    setIsDark(root.classList.contains("dark"));
-  }, [theme]);
-
   const isActive = (path: string) => {
     return location.pathname === path;
-  };
-
-  const toggleTheme = () => {
-    if (theme === "light") {
-      setTheme("dark");
-    } else if (theme === "dark") {
-      setTheme("light");
-    } else {
-      // If system theme, toggle to the opposite of current appearance
-      setTheme(isDark ? "light" : "dark");
-    }
   };
 
   return (
@@ -74,20 +53,6 @@ const Navbar = () => {
         </nav>
         
         <div className="flex items-center space-x-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className="hidden md:flex"
-          >
-            {isDark ? (
-              <Sun className="h-5 w-5" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
-          </Button>
-          
           <MobileMenu />
         </div>
       </div>
@@ -121,45 +86,14 @@ const NavLink = ({
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { theme, setTheme } = useTheme();
-  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
 
-  useEffect(() => {
-    // Determine if the current theme is dark
-    const root = window.document.documentElement;
-    setIsDark(root.classList.contains("dark"));
-  }, [theme]);
-
-  const toggleTheme = () => {
-    if (theme === "light") {
-      setTheme("dark");
-    } else if (theme === "dark") {
-      setTheme("light");
-    } else {
-      // If system theme, toggle to the opposite of current appearance
-      setTheme(isDark ? "light" : "dark");
-    }
-  };
-
   return (
     <div className="md:hidden">
       <div className="flex items-center space-x-2">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleTheme}
-          aria-label="Toggle theme"
-        >
-          {isDark ? (
-            <Sun className="h-5 w-5" />
-          ) : (
-            <Moon className="h-5 w-5" />
-          )}
-        </Button>
         
         <Button
           variant="ghost"

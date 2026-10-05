@@ -196,37 +196,114 @@ const wrapLabel = (label: string, maxChars: number) => {
 // A color with transparency, from an "hsl(h s% l%)" string.
 const tint = (color: string, alpha: number) => color.replace(")", ` / ${alpha})`);
 
+// --- Hand-drawn look -------------------------------------------------------
+// Small deterministic noise so every shape wobbles the same way on each render.
+const hash = (str: string) => {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 16777619);
+  return h >>> 0;
+};
+const rng = (seed: number) => () => {
+  seed = (seed + 0x6d2b79f5) | 0;
+  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+};
+
+// A pencil-drawn circle: a slightly lumpy loop that overshoots where it started,
+// the way a circle drawn by hand does. `closed` gives a clean blob for fills.
+const sketchCircle = (r: number, seed: string, wobble = 0.08, closed = false) => {
+  const rand = rng(hash(seed));
+  const start = rand() * Math.PI * 2;
+  const turns = closed ? 1 : 1.08 + rand() * 0.06;
+  const steps = Math.max(10, Math.round(r * 1.2));
+  const pts: [number, number][] = [];
+  const bumps = [rand() * 6, rand() * 6, rand() * 6];
+  for (let i = 0; i <= steps * turns; i++) {
+    const a = start + (i / steps) * Math.PI * 2;
+    const k =
+      1 +
+      wobble * (Math.sin(a * 2 + bumps[0]) * 0.5 + Math.sin(a * 3 + bumps[1]) * 0.3 + Math.sin(a * 5 + bumps[2]) * 0.2) +
+      (closed ? 0 : (i / steps) * wobble * 0.6);
+    pts.push([Math.cos(a) * r * k, Math.sin(a) * r * k]);
+  }
+  let d = `M${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
+  for (let i = 1; i < pts.length - 1; i++) {
+    const mx = (pts[i][0] + pts[i + 1][0]) / 2;
+    const my = (pts[i][1] + pts[i + 1][1]) / 2;
+    d += ` Q${pts[i][0].toFixed(1)},${pts[i][1].toFixed(1)} ${mx.toFixed(1)},${my.toFixed(1)}`;
+  }
+  return closed ? d + " Z" : d;
+};
+
+// A slightly shaky pen stroke between two points.
+const sketchLine = (ax: number, ay: number, bx: number, by: number, seed: string) => {
+  const rand = rng(hash(seed));
+  const dx = bx - ax;
+  const dy = by - ay;
+  const len = Math.hypot(dx, dy) || 1;
+  const nx = -dy / len;
+  const ny = dx / len;
+  const bend = len * (0.08 + rand() * 0.06) * (rand() < 0.5 ? -1 : 1);
+  const j = () => (rand() - 0.5) * Math.min(6, len * 0.03);
+  const c1x = ax + dx * 0.33 + nx * bend + j();
+  const c1y = ay + dy * 0.33 + ny * bend + j();
+  const c2x = ax + dx * 0.66 + nx * bend * 0.8 + j();
+  const c2y = ay + dy * 0.66 + ny * bend * 0.8 + j();
+  return `M${ax.toFixed(1)},${ay.toFixed(1)} C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${bx.toFixed(1)},${by.toFixed(1)}`;
+};
+
+const PENCIL = "hsl(var(--foreground) / 0.75)";
+export const HAND_FONT = "'Caveat', 'Segoe Print', 'Comic Sans MS', cursive";
+
 const NodeShape = ({ node, dimmed }: { node: SimNode; dimmed: boolean }) => {
   const common = { opacity: dimmed ? 0.2 : 1, style: { transition: "opacity 200ms" } };
   const c = node.color;
+  const id = node.id;
   switch (node.kind) {
     case "me":
       return (
         <g {...common}>
-          <circle r={node.r + 8} fill="none" stroke="hsl(var(--muted-foreground) / 0.35)" strokeDasharray="2 4" />
-          <circle r={node.r} fill="hsl(var(--card))" stroke="hsl(var(--foreground) / 0.7)" strokeWidth={1.25} />
-          <text textAnchor="middle" fill="hsl(var(--foreground))" fontSize={13.5} fontWeight={500} letterSpacing="0.01em">
-            <tspan x={0} dy="-0.2em">My</tspan>
-            <tspan x={0} dy="1.2em">Experience</tspan>
+          <path d={sketchCircle(node.r, id, 0.05)} fill="hsl(var(--card))" stroke={PENCIL} strokeWidth={1.4} strokeLinecap="round" />
+          <path d={sketchCircle(node.r + 4, id + "2", 0.06)} fill="none" stroke={PENCIL} strokeWidth={0.8} strokeLinecap="round" opacity={0.6} />
+          <text textAnchor="middle" fill="hsl(var(--foreground))" fontFamily={HAND_FONT} fontSize={19} fontWeight={700}>
+            <tspan x={0} dy="-0.15em">my</tspan>
+            <tspan x={0} dy="1em">experience</tspan>
           </text>
         </g>
       );
     case "interest":
       return (
         <g {...common}>
-          <circle r={node.r + 10} fill={tint(c, 0.1)} />
-          <circle r={node.r} fill={tint(c, 0.25)} stroke={c} strokeWidth={1.25} />
-          <circle r={4} fill={c} />
+          {/* A watercolor wash: two offset blobs of the same pigment. */}
+          <path d={sketchCircle(node.r + 9, id + "w1", 0.14, true)} fill={tint(c, 0.22)} />
+          <path d={sketchCircle(node.r + 4, id + "w2", 0.16, true)} transform="translate(2,-1.5)" fill={tint(c, 0.22)} />
+          <path d={sketchCircle(node.r, id, 0.07)} fill="none" stroke={c} strokeWidth={1.6} strokeLinecap="round" />
         </g>
       );
     case "project":
-      return <circle {...common} r={node.r} fill="hsl(var(--card))" stroke={c} strokeWidth={1.75} />;
+      return (
+        <g {...common}>
+          <path d={sketchCircle(node.r, id, 0.1, true)} fill="hsl(var(--card))" />
+          <path d={sketchCircle(node.r, id, 0.1)} fill="none" stroke={c} strokeWidth={1.6} strokeLinecap="round" />
+        </g>
+      );
     case "experience":
-      return <circle {...common} r={node.r} fill={tint(c, 0.55)} stroke={c} strokeWidth={1} />;
+      return (
+        <g {...common}>
+          <path d={sketchCircle(node.r + 1, id + "w", 0.18, true)} fill={tint(c, 0.6)} />
+          <path d={sketchCircle(node.r, id, 0.1)} fill="none" stroke={c} strokeWidth={1.1} strokeLinecap="round" />
+        </g>
+      );
     case "writing":
-      return <circle {...common} r={node.r} fill="hsl(var(--card))" stroke={c} strokeWidth={1.5} strokeDasharray="2.5 2" />;
+      return (
+        <g {...common}>
+          <path d={sketchCircle(node.r, id, 0.1, true)} fill="hsl(var(--card))" />
+          <path d={sketchCircle(node.r, id, 0.1)} fill="none" stroke={c} strokeWidth={1.4} strokeDasharray="3 2.5" strokeLinecap="round" />
+        </g>
+      );
     default:
-      return <circle {...common} r={node.r} fill={c} />;
+      return <path {...common} d={sketchCircle(node.r, id, 0.2, true)} fill={c} />;
   }
 };
 
@@ -484,8 +561,8 @@ const InterestMap = () => {
   const interests = sim.nodes.filter((n) => n.kind === "interest");
   // Labels shrink with the map but stay readable when zoomed out.
   const labelScale = Math.max(1, 0.9 / view.k);
-  const labelSize = (n: SimNode) => (n.kind === "interest" ? 12 : 10) * labelScale;
-  const labelOffset = (n: SimNode) => n.r + (n.kind === "interest" ? 20 : 11) * labelScale;
+  const labelSize = (n: SimNode) => (n.kind === "interest" ? 18 : 14) * labelScale;
+  const labelOffset = (n: SimNode) => n.r + (n.kind === "interest" ? 24 : 13) * labelScale;
 
 
 
@@ -493,8 +570,10 @@ const InterestMap = () => {
     <div className="relative w-full h-full">
       <div ref={containerRef} className="absolute inset-0 overflow-hidden rounded-lg border border-border bg-card"
         style={{
-          backgroundImage: "radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px)",
-          backgroundSize: "30px 30px",
+          // Graph paper, like a page from a notebook.
+          backgroundImage:
+            "linear-gradient(hsl(var(--border) / 0.55) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border) / 0.55) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
         }}
       >
         <svg
@@ -520,18 +599,16 @@ const InterestMap = () => {
                 const color = fromMe
                   ? "hsl(var(--muted-foreground))"
                   : a.kind === "interest" ? a.color : b.kind === "interest" ? b.color : "hsl(var(--muted-foreground))";
-                // Bend each link slightly to one side so the web reads as organic.
-                const mx = (a.x + b.x) / 2 - (b.y - a.y) * 0.12;
-                const my = (a.y + b.y) / 2 + (b.x - a.x) * 0.12;
                 return (
                   <path
                     key={`${aId}-${bId}`}
-                    d={`M${a.x},${a.y} Q${mx},${my} ${b.x},${b.y}`}
+                    d={sketchLine(a.x, a.y, b.x, b.y, aId + bId)}
+                    strokeLinecap="round"
                     fill="none"
                     stroke={color}
-                    strokeOpacity={focusSet ? (active ? 0.85 : 0.05) : fromMe ? 0.25 : 0.4}
-                    strokeWidth={active ? 1.75 : 1}
-                    strokeDasharray={fromMe && !active ? "3 4" : undefined}
+                    strokeOpacity={focusSet ? (active ? 0.9 : 0.05) : fromMe ? 0.3 : 0.5}
+                    strokeWidth={active ? 1.8 : 1.1}
+                    strokeDasharray={fromMe && !active ? "1 5" : undefined}
                     style={{ transition: "stroke-opacity 200ms" }}
                   />
                 );
@@ -566,7 +643,7 @@ const InterestMap = () => {
                     }}
                   >
                     {isSelected && (
-                      <circle r={n.r + 9} fill="none" stroke="hsl(var(--foreground))" strokeWidth={1.5} strokeDasharray="3 3" />
+                      <path d={sketchCircle(n.r + 10, n.id + "sel", 0.12)} fill="none" stroke={PENCIL} strokeWidth={1.3} strokeLinecap="round" />
                     )}
                     <NodeShape node={n} dimmed={dimmed} />
                     {showLabel && (
@@ -574,9 +651,9 @@ const InterestMap = () => {
                         y={labelOffset(n)}
                         textAnchor="middle"
                         fontSize={labelSize(n)}
-                        fontWeight={n.kind === "interest" ? 600 : 400}
-                        letterSpacing={n.kind === "interest" ? undefined : "0.01em"}
-                        fill={n.kind === "interest" ? "hsl(var(--foreground) / 0.85)" : "hsl(var(--muted-foreground) / 0.85)"}
+                        fontFamily={HAND_FONT}
+                        fontWeight={n.kind === "interest" ? 700 : 500}
+                        fill={n.kind === "interest" ? "hsl(var(--foreground) / 0.9)" : "hsl(var(--muted-foreground))"}
                         stroke="hsl(var(--card))"
                         strokeWidth={4 * labelScale}
                         strokeLinejoin="round"
@@ -585,7 +662,7 @@ const InterestMap = () => {
                         style={{ transition: "opacity 200ms", pointerEvents: "none" }}
                       >
                         {wrapLabel(n.label, n.kind === "interest" ? (compact ? 12 : 16) : 12).map((line, i) => (
-                          <tspan key={i} x={0} dy={i === 0 ? 0 : "1.15em"}>
+                          <tspan key={i} x={0} dy={i === 0 ? 0 : "0.95em"}>
                             {line}
                           </tspan>
                         ))}

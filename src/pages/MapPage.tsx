@@ -15,8 +15,9 @@ const MapPage = () => {
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold mb-4">How it all connects</h1>
         <p className="text-lg text-muted-foreground mb-4 max-w-3xl">
-          A map of my interests and the projects, roles, and writing that tie them together.
-          Drag to move around, scroll or pinch to zoom, and select anything to see what it links to.
+          I kept noticing that the things I work on aren't separate. A finance project turns into an NLP
+          problem, a safety paper turns into a systems question. So I sketched it out. Drag things around,
+          zoom in, and click anything to see where it leads.
         </p>
         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
           {KINDS.map(({ kind, label }) => (
