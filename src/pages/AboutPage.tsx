@@ -1,8 +1,7 @@
 
 import { Button } from "@/components/ui/button";
-import { Download, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import profileImg from '../assets/profile.png';
-import resumePdf from '../assets/gauri_resume.pdf';
 
 const AboutPage = () => {
   return (
@@ -22,12 +21,6 @@ const AboutPage = () => {
               </div>
               
               <div className="flex flex-col gap-3">
-                <a href={resumePdf} target="_blank" rel="noopener noreferrer">
-                  <Button className="w-full">
-                    <Download className="mr-2 h-4 w-4" /> Download CV
-                  </Button>
-                </a>
-                
                 <a 
                   href="https://www.linkedin.com/in/gs-softwaredev/" 
                   target="_blank" 
