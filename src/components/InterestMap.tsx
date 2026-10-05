@@ -31,16 +31,16 @@ interface View {
 }
 
 const RADIUS: Record<MapNodeKind, number> = {
-  me: 30,
-  interest: 18,
-  topic: 10,
-  project: 10,
-  experience: 10,
-  writing: 9,
+  me: 44,
+  interest: 15,
+  topic: 5,
+  project: 8,
+  experience: 8,
+  writing: 7,
 };
 
 const KIND_LABEL: Record<MapNodeKind, string> = {
-  me: "Me",
+  me: "Overview",
   interest: "Interest",
   topic: "Topic",
   project: "Project",
@@ -97,7 +97,7 @@ const buildSimulation = (portrait: boolean) => {
       vx: 0,
       vy: 0,
       r: RADIUS[n.kind],
-      color: n.kind === "me" ? "hsl(var(--primary))" : interestColors[colorKey] ?? interestColors.writing,
+      color: n.kind === "me" ? "hsl(215 14% 55%)" : interestColors[colorKey] ?? interestColors.writing,
       ...(n.kind === "me" ? { fx: 0, fy: 0 } : {}),
       ...(n.kind === "interest" ? { home: { x, y } } : {}),
     };
@@ -182,74 +182,56 @@ const tick = (nodes: SimNode[], byId: Map<string, SimNode>, alpha: number) => {
   }
 };
 
+// A color with transparency, from an "hsl(h s% l%)" string.
+const tint = (color: string, alpha: number) => color.replace(")", ` / ${alpha})`);
+
 const NodeShape = ({ node, dimmed }: { node: SimNode; dimmed: boolean }) => {
-  const common = { opacity: dimmed ? 0.25 : 1, style: { transition: "opacity 150ms" } };
+  const common = { opacity: dimmed ? 0.2 : 1, style: { transition: "opacity 200ms" } };
+  const c = node.color;
   switch (node.kind) {
     case "me":
       return (
         <g {...common}>
-          <circle r={node.r} fill="hsl(var(--primary))" />
-          <text
-            textAnchor="middle"
-            dy="0.35em"
-            fill="hsl(var(--primary-foreground))"
-            fontSize={13}
-            fontWeight={600}
-          >
-            {node.label}
+          <circle r={node.r + 8} fill="none" stroke="hsl(var(--muted-foreground) / 0.35)" strokeDasharray="2 4" />
+          <circle r={node.r} fill="hsl(var(--card))" stroke="hsl(var(--foreground) / 0.7)" strokeWidth={1.25} />
+          <text textAnchor="middle" fill="hsl(var(--foreground))" fontSize={13.5} fontWeight={500} letterSpacing="0.01em">
+            <tspan x={0} dy="-0.2em">My</tspan>
+            <tspan x={0} dy="1.2em">Experience</tspan>
           </text>
         </g>
       );
     case "interest":
       return (
         <g {...common}>
-          <circle r={node.r + 5} fill={node.color} opacity={0.18} />
-          <circle r={node.r} fill={node.color} />
+          <circle r={node.r + 10} fill={tint(c, 0.1)} />
+          <circle r={node.r} fill={tint(c, 0.25)} stroke={c} strokeWidth={1.25} />
+          <circle r={4} fill={c} />
         </g>
       );
     case "project":
-      return <circle {...common} r={node.r} fill="hsl(var(--background))" stroke={node.color} strokeWidth={3} />;
+      return <circle {...common} r={node.r} fill="hsl(var(--card))" stroke={c} strokeWidth={1.75} />;
     case "experience":
-      return (
-        <rect
-          {...common}
-          x={-node.r}
-          y={-node.r}
-          width={node.r * 2}
-          height={node.r * 2}
-          rx={4}
-          fill={node.color}
-        />
-      );
+      return <circle {...common} r={node.r} fill={tint(c, 0.55)} stroke={c} strokeWidth={1} />;
     case "writing":
-      return (
-        <rect
-          {...common}
-          x={-node.r * 0.8}
-          y={-node.r * 0.8}
-          width={node.r * 1.6}
-          height={node.r * 1.6}
-          rx={2}
-          transform="rotate(45)"
-          fill="hsl(var(--background))"
-          stroke={node.color}
-          strokeWidth={2.5}
-        />
-      );
+      return <circle {...common} r={node.r} fill="hsl(var(--card))" stroke={c} strokeWidth={1.5} strokeDasharray="2.5 2" />;
     default:
-      return <circle {...common} r={node.r} fill={node.color} />;
+      return <circle {...common} r={node.r} fill={c} />;
   }
 };
 
-export const KindGlyph = ({ kind, color = "currentColor" }: { kind: MapNodeKind; color?: string }) => (
+export const KindGlyph = ({ kind, color = "hsl(215 14% 55%)" }: { kind: MapNodeKind; color?: string }) => (
   <svg width={14} height={14} viewBox="-8 -8 16 16" aria-hidden="true">
-    {kind === "interest" && <circle r={6} fill={color} />}
-    {kind === "topic" && <circle r={4} fill={color} />}
-    {kind === "project" && <circle r={5} fill="none" stroke={color} strokeWidth={2.5} />}
-    {kind === "experience" && <rect x={-5} y={-5} width={10} height={10} rx={2} fill={color} />}
-    {kind === "writing" && (
-      <rect x={-4} y={-4} width={8} height={8} transform="rotate(45)" fill="none" stroke={color} strokeWidth={2} />
+    {kind === "interest" && (
+      <>
+        <circle r={6} fill={tint(color, 0.25)} stroke={color} strokeWidth={1.25} />
+        <circle r={2} fill={color} />
+      </>
     )}
+    {kind === "topic" && <circle r={3} fill={color} />}
+    {kind === "project" && <circle r={5} fill="none" stroke={color} strokeWidth={1.75} />}
+    {kind === "experience" && <circle r={5} fill={tint(color, 0.55)} stroke={color} strokeWidth={1} />}
+    {kind === "writing" && <circle r={5} fill="none" stroke={color} strokeWidth={1.5} strokeDasharray="2.5 2" />}
+    {kind === "me" && <circle r={5} fill="none" stroke={color} strokeWidth={1.25} />}
   </svg>
 );
 
@@ -490,6 +472,28 @@ const InterestMap = () => {
   const interests = sim.nodes.filter((n) => n.kind === "interest");
   // Labels shrink with the map but stay readable when zoomed out.
   const labelScale = Math.max(1, 0.9 / view.k);
+  const labelSize = (n: SimNode) => (n.kind === "interest" ? 13 : 11) * labelScale;
+  const labelOffset = (n: SimNode) => n.r + (n.kind === "interest" ? 22 : 14) * labelScale;
+
+  // Place labels most-important first and skip any that would collide, so the
+  // map stays legible. Hovering or zooming in reveals the rest.
+  const visibleLabels = new Set<string>();
+  {
+    const placed: { x1: number; y1: number; x2: number; y2: number }[] = [];
+    const rank = (n: SimNode) =>
+      (n.id === focusId ? 0 : 4) + (n.kind === "interest" ? 0 : 2) + (focusSet?.has(n.id) ? 0 : 1);
+    const ordered = sim.nodes.filter((n) => n.kind !== "me").sort((a, b) => rank(a) - rank(b));
+    for (const n of ordered) {
+      const size = labelSize(n);
+      const w = n.label.length * size * 0.55 + 4;
+      const cy = n.y + labelOffset(n) - size * 0.35;
+      const box = { x1: n.x - w / 2, x2: n.x + w / 2, y1: cy - size * 0.6, y2: cy + size * 0.6 };
+      const hits = placed.some((p) => box.x1 < p.x2 && box.x2 > p.x1 && box.y1 < p.y2 && box.y2 > p.y1);
+      if (hits && n.kind !== "interest" && n.id !== focusId) continue;
+      placed.push(box);
+      visibleLabels.add(n.id);
+    }
+  }
 
   return (
     <div className="relative w-full h-full">
@@ -510,7 +514,7 @@ const InterestMap = () => {
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerUp}
           role="application"
-          aria-label="Interactive map of Gauri's interests, projects, and experiences. Drag to pan, scroll to zoom, select a node for details."
+          aria-label="Interactive map of my interests, projects, and experiences. Drag to pan, scroll to zoom, select a node for details."
         >
           <g transform={`translate(${view.x},${view.y}) scale(${view.k})`}>
             <g>
@@ -518,18 +522,23 @@ const InterestMap = () => {
                 const a = byId.get(aId)!;
                 const b = byId.get(bId)!;
                 const active = focusSet ? focusSet.has(aId) && focusSet.has(bId) && (aId === focusId || bId === focusId) : false;
-                const color = a.kind === "interest" ? a.color : b.kind === "interest" ? b.color : "hsl(var(--muted-foreground))";
+                const fromMe = a.kind === "me" || b.kind === "me";
+                const color = fromMe
+                  ? "hsl(var(--muted-foreground))"
+                  : a.kind === "interest" ? a.color : b.kind === "interest" ? b.color : "hsl(var(--muted-foreground))";
+                // Bend each link slightly to one side so the web reads as organic.
+                const mx = (a.x + b.x) / 2 - (b.y - a.y) * 0.12;
+                const my = (a.y + b.y) / 2 + (b.x - a.x) * 0.12;
                 return (
-                  <line
+                  <path
                     key={`${aId}-${bId}`}
-                    x1={a.x}
-                    y1={a.y}
-                    x2={b.x}
-                    y2={b.y}
-                    stroke={active ? color : "hsl(var(--muted-foreground))"}
-                    strokeOpacity={focusSet ? (active ? 0.9 : 0.08) : 0.3}
-                    strokeWidth={active ? 2 : a.kind === "me" || b.kind === "me" ? 1.5 : 1}
-                    style={{ transition: "stroke-opacity 150ms" }}
+                    d={`M${a.x},${a.y} Q${mx},${my} ${b.x},${b.y}`}
+                    fill="none"
+                    stroke={color}
+                    strokeOpacity={focusSet ? (active ? 0.85 : 0.05) : fromMe ? 0.25 : 0.4}
+                    strokeWidth={active ? 1.75 : 1}
+                    strokeDasharray={fromMe && !active ? "3 4" : undefined}
+                    style={{ transition: "stroke-opacity 200ms" }}
                   />
                 );
               })}
@@ -538,7 +547,7 @@ const InterestMap = () => {
               {sim.nodes.map((n) => {
                 const dimmed = focusSet ? !focusSet.has(n.id) : false;
                 const isSelected = selected === n.id;
-                const showLabel = n.kind === "me" ? false : n.kind === "interest" || view.k > 0.5 || (focusSet?.has(n.id) ?? false);
+                const showLabel = visibleLabels.has(n.id);
                 return (
                   <g
                     key={n.id}
@@ -566,17 +575,17 @@ const InterestMap = () => {
                     <NodeShape node={n} dimmed={dimmed} />
                     {showLabel && (
                       <text
-                        y={n.r + (n.kind === "interest" ? 20 : 15) * labelScale}
+                        y={labelOffset(n)}
                         textAnchor="middle"
-                        fontSize={(n.kind === "interest" ? 13 : 11) * labelScale}
+                        fontSize={labelSize(n)}
                         fontWeight={n.kind === "interest" ? 600 : 400}
-                        fill="hsl(var(--foreground))"
-                        stroke="hsl(var(--background))"
+                        fill={n.kind === "interest" ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))"}
+                        stroke="hsl(var(--card))"
                         strokeWidth={4 * labelScale}
                         strokeLinejoin="round"
                         paintOrder="stroke"
-                        opacity={dimmed ? 0.25 : n.kind === "interest" ? 1 : 0.85}
-                        style={{ transition: "opacity 150ms", pointerEvents: "none" }}
+                        opacity={dimmed ? 0.2 : 1}
+                        style={{ transition: "opacity 200ms", pointerEvents: "none" }}
                       >
                         {n.label}
                       </text>

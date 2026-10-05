@@ -21,22 +21,22 @@ export interface MapNode {
 }
 
 export const interestColors: Record<string, string> = {
-  inference: "hsl(217 85% 58%)",
-  agents: "hsl(262 70% 62%)",
-  safety: "hsl(350 75% 58%)",
-  finance: "hsl(152 60% 42%)",
-  language: "hsl(38 90% 50%)",
-  infra: "hsl(190 75% 45%)",
-  tools: "hsl(318 65% 58%)",
-  community: "hsl(22 85% 55%)",
-  impact: "hsl(88 55% 45%)",
-  writing: "hsl(215 15% 55%)",
+  inference: "hsl(212 45% 60%)",
+  agents: "hsl(258 35% 66%)",
+  safety: "hsl(352 45% 66%)",
+  finance: "hsl(150 28% 52%)",
+  language: "hsl(36 55% 60%)",
+  infra: "hsl(186 35% 52%)",
+  tools: "hsl(318 30% 64%)",
+  community: "hsl(18 50% 64%)",
+  impact: "hsl(82 28% 52%)",
+  writing: "hsl(220 10% 60%)",
 };
 
 export const mapNodes: MapNode[] = [
   {
     id: "me",
-    label: "Gauri",
+    label: "My Experience",
     kind: "me",
     blurb:
       "CS @ Georgia Tech. Everything here connects back to a few questions: how to make AI systems faster, safer, and more useful, especially where money and information move quickly.",
