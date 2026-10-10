@@ -32,7 +32,7 @@ const ProjectsPage = () => {
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold mb-4">Projects</h1>
         <p className="text-xl text-muted-foreground mb-12">
-          A collection of my work across research papers, hackathons, and personal projects in MAS, AI Safety, Finance and more.
+          Research papers, hackathons, and side projects.
         </p>
         
         <div className="space-y-12">
@@ -56,8 +56,8 @@ const ProjectsPage = () => {
             title="Position: Protocol-Aware Guardrails Are Necessary for Multi-Agent Systems"
             period="Fall 2026"
             role="Co-author, with Vidhi Kulkarni"
-            description="Accepted as a poster at the NeurIPS 2026 Agents in the Wild (AIWILD) workshop"
-            longDescription="Multi-agent systems are becoming the default way tool-using AI ships in products, yet most deployed guardrails are still designed for a single agent and check one message or turn at a time. In multi-agent systems, harm is often protocol-shaped: it emerges from how messages, roles, capabilities, and state changes compose across agents over time. This position paper argues for protocol-aware guardrails that treat the system as a distributed system with explicit interaction semantics. It proposes typed interaction protocols, capability and consent tokens bound to provenance, and runtime monitors that enforce global invariants over execution traces, along with evaluation criteria that reflect real deployment constraints like latency, utility, and composability."
+            description="Poster at the NeurIPS 2026 Agents in the Wild workshop"
+            longDescription="Most guardrails check one agent's messages, one turn at a time. But in multi-agent systems, harm usually comes from how agents hand off work and trust each other's outputs. We argue guardrails need to understand those protocols, and sketch what that could look like."
             tags={["Multi-Agent Systems", "AI Safety", "Guardrails", "NeurIPS Workshop"]}
             links={[
               { label: "Paper", url: guardrailsPdf }
@@ -69,8 +69,8 @@ const ProjectsPage = () => {
             title="Towards Quantitative Benchmarking of MAS" 
             period="Summer 2025"
             role="Head Researcher"
-            description="Towards Quantitative Benchmarking of MAS - Research Paper"
-            longDescription="Towards Quantitative Benchmarking for Multi-Agent System Security is an ongoing research paper that proposes a formal framework for evaluating the security of agentic AI systems. The work introduces metrics for agent impact chains, cascading failure scenarios, and protocol-level blast radius estimation, drawing from real-world agent coordination and adversarial prompting techniques. By defining measurable threat surfaces in multi-agent ecosystems, the paper aims to support reproducible, rigorous benchmarking standards for evaluating AI system robustness at scale."
+            description="Research paper"
+            longDescription="A framework for putting numbers on multi-agent security: how attacks chain across agents, how far a failure spreads, and how big the blast radius gets at the protocol level."
             tags={["Agentic AI", "LLM Safety", "Benchmarking", "Attack Vectors"]}
             links={[
               { label: "POV Paper", url: "https://arxiv.org/abs/2507.21146" }
@@ -83,8 +83,8 @@ const ProjectsPage = () => {
             title="AegentDev" 
             period="Summer 2025"
             role="Co Founder"
-            description="AegentDev – Fusen Fellowship Project"
-            longDescription="Aegent Dev is an experimental research and development initiative focused on securing agentic AI systems and multi-agent communication. The project explores protocol-level safeguards for agent-to-agent interaction using the Model Context Protocol (MCP) and evaluates cascading vulnerabilities via custom benchmark scenarios. We're developing tools to audit, simulate, and harden collaborative AI workflows—paving the way for more interpretable, intent-aligned, and resilient agent-based infrastructure."
+            description="Fusen World Fellowship"
+            longDescription="Tools for stress-testing agent systems over MCP, so you find where they break before someone else does."
             tags={["Agentic AI", "MCP", "Benchmarking", "Security"]}
             links={[
               { label: "Website", url: "https://aegentdev.com/" }
@@ -97,8 +97,8 @@ const ProjectsPage = () => {
             title="SimpliEarn"
             period="2024 - Present"
             role="Project Lead"
-            description="SimpliEarn project @ Big Data Big Impact at GT"
-            longDescription="SimpliEarn is an AI-powered platform that transforms earnings calls into actionable insights. As Project Lead of the sentiment analysis team, I developed a multimodal sentiment analysis pipeline using FinBERT and Wav2Vec, aligning speech with transcripts to boost sentiment accuracy by 67%. The platform enables investors to quickly digest earnings calls through summarized content, trend visualizations, and natural language insights—supporting faster, data-informed financial decisions."
+            description="Big Data Big Impact @ Georgia Tech"
+            longDescription="Turns earnings calls into something investors can skim. I led the sentiment team and built a pipeline with FinBERT and Wav2Vec that lines up the audio with the transcript, which improved sentiment accuracy by 67%."
             tags={["Data Visualization", "Sentiment Analysis", "Python", "Finance"]}
             links={[
               { label: "Club Website", url: "https://gtbigdatabigimpact.com/" }
@@ -114,8 +114,8 @@ const ProjectsPage = () => {
             title="Acid Mine Drainage Visualization"
             period="2024 - 2025"
             role="Grand Challenges, Researcher"
-            description="Grand Challenges Remote Sensing Project"
-            longDescription="This year long research project leveraged Google Earth Engine and satellite imagery to remotely monitor and send chemicals for Acid Mine Drainage remediation in West Virginia. By utilizing satellite data, the system tracks and assesses chemical usage and distribution across various regions. We also novelly, focus on rare earth element detection for this project, allowing for potential AMD remediation efforts to be more fiscally lucrative. This approach provides an efficient, real-time solution for monitoring environmental impacts. We chose to focus on Acid Mine Drainage because it is a major environmental issue in West Virginia, and it is a problem that is not well understood, and remediation efforts are not well funded."
+            description="Grand Challenges"
+            longDescription="We used satellite imagery and Google Earth Engine to track acid mine drainage cleanup in West Virginia, and looked for rare earth elements that could help pay for it."
             tags={["Remote Sensing", "Google Earth Engine", "Python", "Satellite Imaging", "Environmental Science"]}
             links={[
               { label: "Website", url: "https://itsevelync.github.io/AMD-GC/" }
@@ -128,8 +128,8 @@ const ProjectsPage = () => {
             title="Podcast Audio-Textual Research"
             period="2024"
             role="Researcher"
-            description="Audio Stylistic and Textual Analysis of Podcasts."
-            longDescription="This machine learning project analyzed audio stylistic and textual variations linked to listener sentiments in news podcasts. Using OPENSMILE and TextBlob, I analyzed transcripts and listener feedback from 30 NYT podcasts to understand audience engagement. This paper recieved an honorable mention for its emperical process at the 2024 AP Research MENA Forum at AU Dubai"
+            description="AP Research"
+            longDescription="How do voice and word choice in news podcasts shape how listeners feel? I studied 30 NYT episodes to find out. Honorable mention at the 2024 AP Research MENA Forum."
             tags={["NLP", "Sentiment Analysis", "OPENSMILE", "TextBlob"]}
             links={[
               { label: "Paper", url: "https://drive.google.com/file/d/1oWdZqiYPbXr52UoqpPgSr0a-AYpqzhrt/view" }
@@ -142,8 +142,8 @@ const ProjectsPage = () => {
             title="VisualEase"
             period="2024"
             role="Team Member"
-            description="Hack GT 2024 Project"
-            longDescription="VisualEase is an innovative memory training web application designed to enhance active recall through AI-generated images and an interactive flashcard interface. The seamless and responsive front-end experience is powered by LLAMA3, Node.js, and Flask."
+            description="HackGT 2024"
+            longDescription="Flashcards with AI-generated images, to help things stick."
             tags={["AI", "Memory Training", "GROQ", "Flux.1 API"]}
             links={[
               { label: "DevPost Submission", url: "https://devpost.com/software/visualease" }
@@ -156,8 +156,8 @@ const ProjectsPage = () => {
             title="Engarde"
             period="2025"
             role="Team Member"
-            description="Hackalytics 2025 Project"
-            longDescription="EnGarde is a web platform designed to streamline the fencing recruitment process, bridging the gap between international athletes and U.S. collegiate coaches. The platform allows fencers to create profiles showcasing their skills, rankings, and practice footage."
+            description="Hackalytics 2025"
+            longDescription="Helps international fencers get noticed by U.S. college coaches, with profiles, rankings, and practice footage in one place."
             tags={["Django", "Selenium", "Data Scraping", "Web Analytics"]}
             links={[
               { label: "DevPost Submission", url: "https://devpost.com/software/en-guarde" }
