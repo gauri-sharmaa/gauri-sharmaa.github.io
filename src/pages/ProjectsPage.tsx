@@ -11,6 +11,7 @@ import podcastImg from '../assets/podcast.jpg';
 import visualeaseImg from '../assets/visualease.jpg';
 import engardeImg from '../assets/engarde.jpg';
 import guardrailsImg from '../assets/guardrails.png';
+import attentionFlowImg from '../assets/attention-flow.png';
 
 const ProjectsPage = () => {
   const location = useLocation();
@@ -50,6 +51,33 @@ const ProjectsPage = () => {
             ]}
             image="/src/assets/simpli.png"
           /> */}
+
+          <ProjectCard 
+            id="attention-flow"
+            title="Attention Flow"
+            period="Fall 2026"
+            role="Personal project"
+            description="Streaming engine in Go"
+            longDescription="When OpenAI spikes, ChatGPT tends to follow a few minutes later. Attention Flow learns these lead-lag links between 147 topics on its own, flags the ones that haven't caught up yet, and says how confident it is. I also ran it on 90 days of Polymarket trades: trading in one market does set off related ones, but news and Reddit buzz don't lead the market."
+            tags={["Go", "Streaming", "Forecasting", "Prediction Markets"]}
+            links={[
+              { label: "GitHub", url: "https://github.com/gauri-sharmaa/attention-flow" }
+            ]}
+            image={attentionFlowImg}
+          />
+
+          <ProjectCard 
+            id="millennium-oes"
+            title="Millennium Order Entry System"
+            period="Fall 2026"
+            role="Personal project"
+            description="Low-latency trading infrastructure"
+            longDescription="An order entry and execution engine built the way trading firms build theirs: one process, one machine, no cloud and no dependencies. Orders go through a lock-free ring buffer into a single-threaded event loop and out over a raw FIX connection in about 5 to 10 microseconds. It handles 20+ order types with risk checks inline."
+            tags={["Go", "Low Latency", "FIX Protocol", "Trading Systems"]}
+            links={[
+              { label: "GitHub", url: "https://github.com/gauri-sharmaa/order_entry_system" }
+            ]}
+          />
 
           <ProjectCard 
             id="protocol-guardrails"

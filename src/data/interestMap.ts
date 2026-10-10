@@ -188,6 +188,24 @@ export const mapNodes: MapNode[] = [
 
   // Projects
   {
+    id: "attention-flow",
+    label: "Attention Flow",
+    kind: "project",
+    period: "Fall 2026",
+    blurb:
+      "A streaming engine in Go that learns how attention moves between topics, then flags the ones that haven't caught up yet. Also tested on 90 days of Polymarket trades.",
+    link: { label: "Project", href: "/projects#attention-flow" },
+  },
+  {
+    id: "millennium-oes",
+    label: "Millennium OES",
+    kind: "project",
+    period: "Fall 2026",
+    blurb:
+      "A single-process order entry system with a lock-free ring buffer, a raw FIX client, and a hot path of about 5 to 10 microseconds.",
+    link: { label: "Project", href: "/projects#millennium-oes" },
+  },
+  {
     id: "guardrails-paper",
     label: "Protocol-Aware Guardrails",
     kind: "project",
@@ -318,6 +336,12 @@ export const mapEdges: [string, string][] = [
   ["grand-challenges", "community"],
   ["grand-challenges", "impact"],
 
+  ["attention-flow", "finance"],
+  ["attention-flow", "tools"],
+  ["attention-flow", "low-latency"],
+  ["millennium-oes", "finance"],
+  ["millennium-oes", "low-latency"],
+  ["millennium-oes", "infra"],
   ["guardrails-paper", "safety"],
   ["guardrails-paper", "agents"],
   ["guardrails-paper", "writing"],
