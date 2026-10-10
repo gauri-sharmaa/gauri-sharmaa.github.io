@@ -70,11 +70,20 @@ const AboutPage = () => {
               <div className="space-y-8">
                 <div className="relative pl-8 border-l border-border">
                   <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-primary"></div>
+                  <div className="text-sm text-muted-foreground mb-1">May 2026 – July 2026</div>
+                  <h3 className="text-lg font-medium"><span className="text-foreground">AWS SWE Intern</span></h3>
+                  <div className="text-muted-foreground mb-2">Seattle, WA</div>
+                  <p className="text-muted-foreground mb-3">
+                    As a summer intern on the <span className="text-foreground">AWS Partner Central Catalog Quality</span> team, I designed and built the <span className="text-foreground">task-creation API</span> for a compliance review portal used by <span className="text-foreground">500 internal users</span> for the manual review checks that decide what goes on the AWS catalog. I wrote the API design doc and implemented it as a <span className="text-foreground">Java</span> service, with end-to-end <span className="text-foreground">idempotency</span> for safe retries and a rollback flow spanning <span className="text-foreground">S3, DynamoDB, and SNS</span>, strengthening my distributed systems and API design skills.
+                  </p>
+                </div>
+                <div className="relative pl-8 border-l border-border">
+                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-primary"></div>
                   <div className="text-sm text-muted-foreground mb-1">May 2025 – July 2025</div>
                   <h3 className="text-lg font-medium"><span className="text-foreground">IBM SWE Intern for Open Source</span></h3>
                   <div className="text-muted-foreground mb-2">Atlanta, GA</div>
                   <p className="text-muted-foreground mb-3">
-                    As a summer intern for the open source <span className="text-foreground">KubeStellar</span> project with IBM Research and the GT open source program office, I collaborated with IBM research engineers to implement a <span className="text-foreground">krew plug-in</span> for <span className="text-foreground">parallel multi-cluster viewing</span>, reducing information aggregation time by <span className="text-foreground">72%</span>. I also implemented <span className="text-foreground">46 kubectl</span> commands for KubeStellar’s multi plug-in, strengthening <span className="text-foreground">CI/CD</span> and Kubernetes managementskills.
+                    As a summer intern for the open source <span className="text-foreground">KubeStellar</span> project with IBM Research and the GT open source program office, I collaborated with IBM research engineers to implement a <span className="text-foreground">krew plug-in</span> for <span className="text-foreground">parallel multi-cluster viewing</span>, reducing information aggregation time by <span className="text-foreground">72%</span>. I also implemented <span className="text-foreground">46 kubectl</span> commands for KubeStellar’s multi plug-in, strengthening <span className="text-foreground">CI/CD</span> and Kubernetes management skills.
                   </p>
                 </div>
                 <div className="relative pl-8 border-l border-border">
@@ -145,8 +154,8 @@ const AboutPage = () => {
               <h2 className="text-2xl font-semibold mb-4">Education</h2>
               <div className="space-y-8">
                 <TimelineItem 
-                  period="Present - May 2027"
-                  title="B.S. in Computer Science"
+                  period="Present – May 2028"
+                  title="B.S./M.S. in Computer Science (Integrated Master's)"
                   organization="Georgia Institute of Technology"
                   description="Concentration in Intelligence and Information Internetworks"
                   bullets={[

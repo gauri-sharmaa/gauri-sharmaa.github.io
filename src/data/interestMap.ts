@@ -134,7 +134,10 @@ export const mapNodes: MapNode[] = [
     id: "aws",
     label: "AWS Internship",
     kind: "experience",
-    blurb: "Software engineering internship at Amazon Web Services.",
+    period: "May – Jul 2026",
+    blurb:
+      "SWE intern on the Partner Central Catalog Quality team. Designed and built the task-creation API for a compliance review portal used by 500 internal users, as a Java service with end-to-end idempotency and a rollback flow across S3, DynamoDB, and SNS.",
+    link: { label: "Experience", href: "/about" },
   },
   {
     id: "ibm",
