@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom"; 
 import { Button } from "@/components/ui/button";
 import GraphPattern from "@/components/GraphPattern";
+import InterestMap from "@/components/InterestMap";
 import { ArrowRight, Github, Linkedin } from "lucide-react";
 import { blogPosts } from "@/data/blogPosts";
 import { useState, useEffect } from "react";
@@ -113,6 +114,27 @@ const HomePage = () => {
         </div>
       </section>
       
+      {/* Interest map */}
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col items-center text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4">How it all connects</h2>
+            <p className="text-muted-foreground max-w-2xl">
+              It's hard to keep my projects siloed, and a one-page resume can't capture everything (even with
+              maxed-out margins)
+            </p>
+          </div>
+          <div className="max-w-6xl mx-auto h-[65vh] md:h-[70vh] min-h-[440px]">
+            <InterestMap />
+          </div>
+          <div className="flex justify-center mt-8">
+            <Button asChild variant="outline">
+              <Link to="/map">Open the full map</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Projects Section */}
       <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -125,12 +147,12 @@ const HomePage = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <ProjectCard 
-              title="Towards Quantitative Benchmarking of MAS"
-              role="Lead Researcher"
-              period="2025 - Present"
-              description="A framework for measuring how secure multi-agent systems are, built around real attack vectors and protocol weaknesses. It includes tools for simulating adversarial scenarios."
-              tags={["Python", "PyTorch", "Multi-Agent RL"]}
-              link="/projects#benchmarking-mas"
+              title="Attention Flow"
+              role="Personal project"
+              period="Fall 2026"
+              description="A streaming engine in Go that learns how attention moves between topics, like ChatGPT following OpenAI a few minutes later, then flags the topics that haven't caught up yet."
+              tags={["Go", "Streaming", "Forecasting"]}
+              link="/projects#attention-flow"
             />
             
             <ProjectCard 

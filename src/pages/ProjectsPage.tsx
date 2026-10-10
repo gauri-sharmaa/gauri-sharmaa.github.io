@@ -12,6 +12,7 @@ import visualeaseImg from '../assets/visualease.jpg';
 import engardeImg from '../assets/engarde.jpg';
 import guardrailsImg from '../assets/guardrails.png';
 import attentionFlowImg from '../assets/attention-flow.png';
+import millenniumOesImg from '../assets/millennium-oes.webp';
 
 const ProjectsPage = () => {
   const location = useLocation();
@@ -77,6 +78,7 @@ const ProjectsPage = () => {
             links={[
               { label: "GitHub", url: "https://github.com/gauri-sharmaa/order_entry_system" }
             ]}
+            image={millenniumOesImg}
           />
 
           <ProjectCard 
