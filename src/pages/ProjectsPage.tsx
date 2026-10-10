@@ -10,7 +10,7 @@ import amdImg from '../assets/amd.jpg';
 import podcastImg from '../assets/podcast.jpg';
 import visualeaseImg from '../assets/visualease.jpg';
 import engardeImg from '../assets/engarde.jpg';
-import guardrailsPdf from '../assets/protocol_aware_guardrails.pdf';
+import guardrailsImg from '../assets/guardrails.png';
 
 const ProjectsPage = () => {
   const location = useLocation();
@@ -60,8 +60,9 @@ const ProjectsPage = () => {
             longDescription="Most guardrails check one agent's messages, one turn at a time. But in multi-agent systems, harm usually comes from how agents hand off work and trust each other's outputs. We argue guardrails need to understand those protocols, and sketch what that could look like."
             tags={["Multi-Agent Systems", "AI Safety", "Guardrails", "NeurIPS Workshop"]}
             links={[
-              { label: "Paper", url: guardrailsPdf }
+              { label: "Paper", url: "https://openreview.net/forum?id=lQNW0zvJG5" }
             ]}
+            image={guardrailsImg}
           />
 
           <ProjectCard 

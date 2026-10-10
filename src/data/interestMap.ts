@@ -1,5 +1,3 @@
-import guardrailsPdf from "@/assets/protocol_aware_guardrails.pdf";
-
 // Data for the interactive interest map on /map.
 // To add something: push a node below, then connect it to one or more
 // interests in `mapEdges`. The first interest a node connects to sets its color.
@@ -196,7 +194,7 @@ export const mapNodes: MapNode[] = [
     period: "NeurIPS 2026 · AIWILD",
     blurb:
       "Position paper with Vidhi Kulkarni, accepted as a poster at the NeurIPS 2026 Agents in the Wild workshop. Argues that multi-agent safety needs guardrails that reason over interaction protocols and execution traces, not single turns.",
-    link: { label: "Read paper", href: guardrailsPdf, external: true },
+    link: { label: "Read paper", href: "https://openreview.net/forum?id=lQNW0zvJG5", external: true },
   },
   {
     id: "echoes-paper",
