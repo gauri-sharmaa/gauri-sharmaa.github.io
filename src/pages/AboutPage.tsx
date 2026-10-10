@@ -6,6 +6,9 @@ import awsLogo from '../assets/logos/aws.png';
 import ibmLogo from '../assets/logos/ibm.png';
 import fusenLogo from '../assets/logos/fusen.png';
 import gtLogo from '../assets/logos/gt.png';
+import simpliEarnLogo from '../assets/logos/simpliearn.png';
+import tradingGtLogo from '../assets/logos/trading-gt.png';
+import startupExchangeLogo from '../assets/logos/startupexchange.png';
 
 const AboutPage = () => {
   return (
@@ -82,7 +85,7 @@ const AboutPage = () => {
                   </p>
                 </div>
                 <div className="relative pl-12 border-l border-border">
-                  <TimelineMark logo={ibmLogo} alt="IBM" />
+                  <TimelineMark logo={ibmLogo} alt="IBM" fill />
                   <div className="text-sm text-muted-foreground mb-1">May 2025 – July 2025</div>
                   <h3 className="text-lg font-medium"><span className="text-foreground">IBM SWE Intern for Open Source</span></h3>
                   <div className="text-muted-foreground mb-2">Atlanta, GA</div>
@@ -91,7 +94,7 @@ const AboutPage = () => {
                   </p>
                 </div>
                 <div className="relative pl-12 border-l border-border">
-                  <TimelineMark logo={fusenLogo} alt="Fusen World" />
+                  <TimelineMark logo={fusenLogo} alt="Fusen World" fill />
                   <div className="text-sm text-muted-foreground mb-1">May 2025 – Aug 2025</div>
                   <h3 className="text-lg font-medium"><span className="text-foreground">Fusen World Fellowship – AegentDev Co-Founder</span></h3>
                   <div className="text-muted-foreground mb-2">Atlanta, GA</div>
@@ -119,7 +122,7 @@ const AboutPage = () => {
                 </div>
                 
                 <div className="relative pl-12 border-l border-border">
-                  <TimelineMark />
+                  <TimelineMark logo={simpliEarnLogo} alt="SimpliEarn" fill />
                   <div className="text-sm text-muted-foreground mb-1">Jan 2025 – Present</div>
                   <h3 className="text-lg font-medium"><span className="text-foreground">SimpliEarn Project @ Big Data Big Impact Club @ Georgia Tech</span></h3>
                   <div className="text-muted-foreground mb-2">Atlanta, GA</div>
@@ -128,7 +131,7 @@ const AboutPage = () => {
                   </p>
                 </div>
                 <div className="relative pl-12 border-l border-border">
-                  <TimelineMark />
+                  <TimelineMark logo={startupExchangeLogo} alt="StartUpExchange" fill />
                   <div className="text-sm text-muted-foreground mb-1">Jan 2025 – Present</div>
                   <h3 className="text-lg font-medium"><span className="text-foreground">StartUpExchange @ Georgia Tech</span></h3>
                   <div className="text-muted-foreground mb-2">Atlanta, GA</div>
@@ -137,7 +140,7 @@ const AboutPage = () => {
                   </p>
                 </div>
                 <div className="relative pl-12 border-l border-border">
-                  <TimelineMark />
+                  <TimelineMark logo={tradingGtLogo} alt="Trading @ GT" fill />
                   <div className="text-sm text-muted-foreground mb-1">Jul 2025 – Present</div>
                   <h3 className="text-lg font-medium"><span className="text-foreground">Market Insights Head, Trading @ GT</span></h3>
                   <div className="text-muted-foreground mb-2">Atlanta, GA</div>
@@ -198,10 +201,15 @@ const AboutPage = () => {
 };
 
 // The marker on the timeline: a company logo in a small circle, or a dot.
-const TimelineMark = ({ logo, alt = "" }: { logo?: string; alt?: string }) =>
+// Logos with their own background color `fill` the square edge to edge.
+const TimelineMark = ({ logo, alt = "", fill = false }: { logo?: string; alt?: string; fill?: boolean }) =>
   logo ? (
-    <div className="absolute left-[-24px] top-0 w-12 h-12 rounded-lg bg-white border border-border overflow-hidden flex items-center justify-center p-1">
-      <img src={logo} alt={alt} className="w-full h-full object-contain" />
+    <div
+      className={`absolute left-[-24px] top-0 w-12 h-12 rounded-lg border border-border overflow-hidden flex items-center justify-center ${
+        fill ? "bg-black" : "bg-white p-1"
+      }`}
+    >
+      <img src={logo} alt={alt} className={`w-full h-full ${fill ? "object-cover" : "object-contain"}`} />
     </div>
   ) : (
     <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-primary"></div>
