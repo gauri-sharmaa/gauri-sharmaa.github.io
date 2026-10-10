@@ -57,7 +57,7 @@ const ProjectsPage = () => {
             period="Fall 2026"
             role="Co-author, with Vidhi Kulkarni"
             description="Poster at the NeurIPS 2026 Agents in the Wild workshop"
-            longDescription="Most guardrails check one agent's messages, one turn at a time. But in multi-agent systems, harm usually comes from how agents hand off work and trust each other's outputs. We argue guardrails need to understand those protocols, and sketch what that could look like."
+            longDescription="Most guardrails check one agent's messages, one turn at a time. But in multi-agent systems, harm usually comes from how agents hand off work and trust each other's outputs. We argue guardrails need to understand those protocols, and propose a few building blocks: typed interaction protocols, consent tokens tied to where data came from, and runtime monitors that watch the whole execution trace."
             tags={["Multi-Agent Systems", "AI Safety", "Guardrails", "NeurIPS Workshop"]}
             links={[
               { label: "Paper", url: "https://openreview.net/forum?id=lQNW0zvJG5" }
@@ -71,7 +71,7 @@ const ProjectsPage = () => {
             period="Summer 2025"
             role="Head Researcher"
             description="Research paper"
-            longDescription="A framework for putting numbers on multi-agent security: how attacks chain across agents, how far a failure spreads, and how big the blast radius gets at the protocol level."
+            longDescription="A framework for putting numbers on multi-agent security: how attacks chain across agents, how far a failure spreads, and how big the blast radius gets at the protocol level. The goal is security benchmarks for agentic AI that other people can actually reproduce."
             tags={["Agentic AI", "LLM Safety", "Benchmarking", "Attack Vectors"]}
             links={[
               { label: "POV Paper", url: "https://arxiv.org/abs/2507.21146" }
@@ -85,7 +85,7 @@ const ProjectsPage = () => {
             period="Summer 2025"
             role="Co Founder"
             description="Fusen World Fellowship"
-            longDescription="Tools for stress-testing agent systems over MCP, so you find where they break before someone else does."
+            longDescription="Tools for stress-testing agent systems over MCP, so you find where they break before someone else does. We built benchmark scenarios that show how one compromised agent can cascade through the rest of the system."
             tags={["Agentic AI", "MCP", "Benchmarking", "Security"]}
             links={[
               { label: "Website", url: "https://aegentdev.com/" }
@@ -99,7 +99,7 @@ const ProjectsPage = () => {
             period="2024 - Present"
             role="Project Lead"
             description="Big Data Big Impact @ Georgia Tech"
-            longDescription="Turns earnings calls into something investors can skim. I led the sentiment team and built a pipeline with FinBERT and Wav2Vec that lines up the audio with the transcript, which improved sentiment accuracy by 67%."
+            longDescription="Turns earnings calls into something investors can skim. I led the sentiment team and built a pipeline with FinBERT and Wav2Vec that lines up the audio with the transcript, which improved sentiment accuracy by 67%. Instead of an hour of audio, you get a summary, trend charts, and the main takeaways."
             tags={["Data Visualization", "Sentiment Analysis", "Python", "Finance"]}
             links={[
               { label: "Club Website", url: "https://gtbigdatabigimpact.com/" }
@@ -116,7 +116,7 @@ const ProjectsPage = () => {
             period="2024 - 2025"
             role="Grand Challenges, Researcher"
             description="Grand Challenges"
-            longDescription="We used satellite imagery and Google Earth Engine to track acid mine drainage cleanup in West Virginia, and looked for rare earth elements that could help pay for it."
+            longDescription="We used satellite imagery and Google Earth Engine to track acid mine drainage cleanup in West Virginia, and looked for rare earth elements that could help pay for it. We picked this problem because it does real damage there and gets very little funding."
             tags={["Remote Sensing", "Google Earth Engine", "Python", "Satellite Imaging", "Environmental Science"]}
             links={[
               { label: "Website", url: "https://itsevelync.github.io/AMD-GC/" }
@@ -130,7 +130,7 @@ const ProjectsPage = () => {
             period="2024"
             role="Researcher"
             description="AP Research"
-            longDescription="How do voice and word choice in news podcasts shape how listeners feel? I studied 30 NYT episodes to find out. Honorable mention at the 2024 AP Research MENA Forum."
+            longDescription="How do voice and word choice in news podcasts shape how listeners feel? I studied 30 NYT episodes to find out, using OpenSMILE for the audio and TextBlob for transcripts and listener feedback. Honorable mention at the 2024 AP Research MENA Forum."
             tags={["NLP", "Sentiment Analysis", "OPENSMILE", "TextBlob"]}
             links={[
               { label: "Paper", url: "https://drive.google.com/file/d/1oWdZqiYPbXr52UoqpPgSr0a-AYpqzhrt/view" }
@@ -144,7 +144,7 @@ const ProjectsPage = () => {
             period="2024"
             role="Team Member"
             description="HackGT 2024"
-            longDescription="Flashcards with AI-generated images, to help things stick."
+            longDescription="Flashcards with AI-generated images, to help things stick. Built over a hackathon weekend with Llama 3, Node.js, and Flask."
             tags={["AI", "Memory Training", "GROQ", "Flux.1 API"]}
             links={[
               { label: "DevPost Submission", url: "https://devpost.com/software/visualease" }
@@ -158,7 +158,7 @@ const ProjectsPage = () => {
             period="2025"
             role="Team Member"
             description="Hackalytics 2025"
-            longDescription="Helps international fencers get noticed by U.S. college coaches, with profiles, rankings, and practice footage in one place."
+            longDescription="Helps international fencers get noticed by U.S. college coaches, with profiles, rankings, and practice footage in one place. We scraped ranking data with Selenium and built the site in Django."
             tags={["Django", "Selenium", "Data Scraping", "Web Analytics"]}
             links={[
               { label: "DevPost Submission", url: "https://devpost.com/software/en-guarde" }
