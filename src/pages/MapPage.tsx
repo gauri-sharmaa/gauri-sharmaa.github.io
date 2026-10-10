@@ -15,8 +15,8 @@ const MapPage = () => {
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold mb-4">How it all connects</h1>
         <p className="text-lg text-muted-foreground mb-4 max-w-3xl">
-          It's hard to keep my projects siloed, and a one-page resume can't capture everything, even with
-          maxed-out margins!
+          It's hard to keep my projects siloed, and a one-page resume can't capture everything (even with
+          maxed-out margins)
         </p>
         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
           {KINDS.map(({ kind, label }) => (
