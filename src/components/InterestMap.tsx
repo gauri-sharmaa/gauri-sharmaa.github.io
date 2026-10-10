@@ -451,14 +451,14 @@ const InterestMap = ({ bleed = false, page = false }: { bleed?: boolean; page?: 
     const onWheel = (e: WheelEvent) => {
       // Embedded in a page, plain scrolling should scroll the page; a trackpad
       // pinch (which arrives with ctrlKey) or Ctrl/Cmd + scroll still zooms.
-      if (bleed && !exploring && !e.ctrlKey && !e.metaKey) return;
+      if ((bleed || page) && !exploring && !e.ctrlKey && !e.metaKey) return;
       e.preventDefault();
       const rect = svg.getBoundingClientRect();
       zoomAt(Math.exp(-e.deltaY * 0.0015), e.clientX - rect.left, e.clientY - rect.top);
     };
     svg.addEventListener("wheel", onWheel, { passive: false });
     return () => svg.removeEventListener("wheel", onWheel);
-  }, [zoomAt, bleed, exploring]);
+  }, [zoomAt, bleed, page, exploring]);
 
   const toLocal = (e: React.PointerEvent) => {
     const rect = svgRef.current!.getBoundingClientRect();
@@ -584,6 +584,8 @@ const InterestMap = ({ bleed = false, page = false }: { bleed?: boolean; page?: 
     : [];
 
   const interests = sim.nodes.filter((n) => n.kind === "interest");
+  // Edge-to-edge maps keep their controls in from the sides of the page.
+  const inset = (bleed || page) && !exploring;
   // Labels shrink with the map but stay readable when zoomed out.
   const labelScale = Math.max(1, 0.9 / view.k);
   const labelSize = (n: SimNode) => (n.kind === "interest" ? 21 : 16) * labelScale;
@@ -705,7 +707,7 @@ const InterestMap = ({ bleed = false, page = false }: { bleed?: boolean; page?: 
       </div>
 
       {/* Zoom controls */}
-      <div className="absolute top-3 right-3 flex flex-col gap-1 rounded-md border border-border bg-background/90 backdrop-blur p-1 shadow-sm">
+      <div className={`absolute top-3 ${inset ? "right-4 md:right-10" : "right-3"} flex flex-col gap-1 rounded-md border border-border bg-background/90 backdrop-blur p-1 shadow-sm`}>
         <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Zoom in" onClick={() => zoomAt(1.25, size.w / 2, size.h / 2)}>
           <Plus className="h-4 w-4" />
         </Button>
@@ -728,7 +730,7 @@ const InterestMap = ({ bleed = false, page = false }: { bleed?: boolean; page?: 
       </div>
 
       {/* Interest legend: tap to jump to an interest */}
-      <div className="absolute top-3 left-3 right-16 flex md:flex-wrap gap-1.5 overflow-x-auto md:overflow-visible pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className={`absolute top-3 ${inset ? "left-4 right-16 md:left-10 md:right-24" : "left-3 right-16"} flex md:flex-wrap gap-1.5 overflow-x-auto md:overflow-visible pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}>
         {interests.map((n) => (
           <button
             key={n.id}
@@ -748,7 +750,7 @@ const InterestMap = ({ bleed = false, page = false }: { bleed?: boolean; page?: 
 
       {/* Detail panel */}
       {selectedNode && (
-        <div className="absolute bottom-3 left-3 right-3 md:left-auto md:w-80 max-h-[45%] md:max-h-[60%] overflow-y-auto rounded-lg border border-border bg-background/95 backdrop-blur p-4 shadow-lg">
+        <div className={`absolute bottom-3 ${inset ? "left-4 right-4 md:right-10" : "left-3 right-3"} md:left-auto md:w-80 max-h-[45%] md:max-h-[60%] overflow-y-auto rounded-lg border border-border bg-background/95 backdrop-blur p-4 shadow-lg`}>
           <div className="flex items-start justify-between gap-2 mb-2">
             <div>
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
