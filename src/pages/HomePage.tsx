@@ -124,9 +124,11 @@ const HomePage = () => {
               maxed-out margins)
             </p>
           </div>
-          <div className="max-w-6xl mx-auto h-[65vh] md:h-[70vh] min-h-[440px]">
-            <InterestMap />
-          </div>
+        </div>
+        <div className="w-full h-[80vh] md:h-[88vh] min-h-[520px]">
+          <InterestMap bleed />
+        </div>
+        <div className="container mx-auto px-4">
           <div className="flex justify-center mt-8">
             <Button asChild variant="outline">
               <Link to="/map">Open the full map</Link>

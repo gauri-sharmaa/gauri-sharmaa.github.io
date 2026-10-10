@@ -323,7 +323,8 @@ export const KindGlyph = ({ kind, color = "hsl(215 14% 55%)" }: { kind: MapNodeK
   </svg>
 );
 
-const InterestMap = () => {
+// `bleed` drops the rounded frame so the map can run edge to edge across the page.
+const InterestMap = ({ bleed = false }: { bleed?: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [size, setSize] = useState({ w: 800, h: 600 });
@@ -446,13 +447,16 @@ const InterestMap = () => {
     const svg = svgRef.current;
     if (!svg) return;
     const onWheel = (e: WheelEvent) => {
+      // Embedded in a page, plain scrolling should scroll the page; a trackpad
+      // pinch (which arrives with ctrlKey) or Ctrl/Cmd + scroll still zooms.
+      if (bleed && !exploring && !e.ctrlKey && !e.metaKey) return;
       e.preventDefault();
       const rect = svg.getBoundingClientRect();
       zoomAt(Math.exp(-e.deltaY * 0.0015), e.clientX - rect.left, e.clientY - rect.top);
     };
     svg.addEventListener("wheel", onWheel, { passive: false });
     return () => svg.removeEventListener("wheel", onWheel);
-  }, [zoomAt]);
+  }, [zoomAt, bleed, exploring]);
 
   const toLocal = (e: React.PointerEvent) => {
     const rect = svgRef.current!.getBoundingClientRect();
@@ -594,11 +598,13 @@ const InterestMap = () => {
       }
     >
       <div className="relative w-full h-full">
-      <div ref={containerRef} className="absolute inset-0 overflow-hidden rounded-lg border border-border bg-card"
+      <div
+        ref={containerRef}
+        className={`absolute inset-0 overflow-hidden bg-card ${bleed ? "border-y border-border" : "rounded-lg border border-border"}`}
         style={{
           // Graph paper, like a page from a notebook.
           backgroundImage:
-            "linear-gradient(hsl(var(--border) / 0.55) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border) / 0.55) 1px, transparent 1px)",
+            "linear-gradient(hsl(var(--border) / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border) / 0.3) 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
       >
