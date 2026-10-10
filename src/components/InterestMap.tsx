@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Maximize2, Minus, Plus, Shrink, X } from "lucide-react";
 import { Button } from "./ui/button";
+import { GRID_PAPER } from "@/lib/gridPaper";
 import {
   interestColors,
   mapEdges,
@@ -324,7 +325,8 @@ export const KindGlyph = ({ kind, color = "hsl(215 14% 55%)" }: { kind: MapNodeK
 );
 
 // `bleed` drops the rounded frame so the map can run edge to edge across the page.
-const InterestMap = ({ bleed = false }: { bleed?: boolean }) => {
+// `page` also drops the border and background, so the page's own grid shows through.
+const InterestMap = ({ bleed = false, page = false }: { bleed?: boolean; page?: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [size, setSize] = useState({ w: 800, h: 600 });
@@ -600,13 +602,10 @@ const InterestMap = ({ bleed = false }: { bleed?: boolean }) => {
       <div className="relative w-full h-full">
       <div
         ref={containerRef}
-        className={`absolute inset-0 overflow-hidden bg-card ${bleed ? "border-y border-border" : "rounded-lg border border-border"}`}
-        style={{
-          // Graph paper, like a page from a notebook.
-          backgroundImage:
-            "linear-gradient(hsl(var(--border) / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border) / 0.3) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-        }}
+        className={`absolute inset-0 overflow-hidden ${
+          page && !exploring ? "" : bleed ? "bg-card border-y border-border" : "bg-card rounded-lg border border-border"
+        }`}
+        style={page && !exploring ? undefined : GRID_PAPER}
       >
         <svg
           ref={svgRef}
